@@ -1,0 +1,2750 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{listings,xcolor,courier,bookmark}
+\usepackage{listingsutf8}
+\definecolor{darkblue}{named}{blue}
+\definecolor{darkred}{named}{red}
+\definecolor{grau}{named}{gray}
+\let\Righttorque\relax
+\lstset{
+captionpos=b,
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+keywordstyle=\color{darkblue},
+stringstyle=\color{darkred},
+extendedchars=true,
+basicstyle=\small\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,
+numberstyle=\tiny,
+breakautoindent  = true,
+breakindent      = 2em,
+breaklines       = true,
+postbreak        = ,
+prebreak         = \raisebox{-.8ex}[0ex][0ex]{\Righttorque},
+showspaces=false, 
+showtabs=false, 
+showstringspaces=false,
+language=VHDL,
+frame=single,
+morecomment=[s]{--}
+}
+
+
+\renewcommand*{\lstlistingname}{Codice}
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{} 
+\fancyfoot{} 
+
+\fancyhead[RO,LE]{\bfseries \leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,CE]{Tesina in SE: Sistemi Embedded}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\date{}
+\cfoot{}
+\end_preamble
+\use_default_options true
+\master Tesina.lyx
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2.5cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Rappresentazione segnali e codice MATLAB
+\end_layout
+
+\begin_layout Standard
+Il Task in esame accetta in ingresso due numeri complessi signed espressi
+ su 64 bit che rappresentano i segnali 
+\series bold
+Sum_Early
+\series default
+ e 
+\series bold
+Sum_Late 
+\series default
+provenienti dal Task precedente.
+ Essi devono subire una serie di manipolazioni per restituire in uscita
+ un segnale signed fixed point espresso su 24 bit.
+ Con riferimento allo schema di principio visto in precedenza, fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Schema-di-principio"
+
+\end_inset
+
+, il primo stadio è rappresentato da due componenti 
+\series bold
+Modulo Quadro
+\series default
+, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Schema-del-modulo"
+
+\end_inset
+
+, che effettuano parallelamente il calcolo per i segnali Sum_Early e Sum_Late.
+ Più precisamente, presi gli ingressi, ogni componente divide il segnale
+ in parte reale e parte immaginaria, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Rappresentazione_seg_in"
+
+\end_inset
+
+.
+ Ogni parte è trattata separatamente da un moltiplicatore.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/rappresentazione_3232.PNG
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Rappresentazione_seg_in"
+
+\end_inset
+
+Rappresentazione dei segnali in ingesso
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In uscita ogni moltiplicatore restituisce un segnale signed espresso su
+ 64 bit.
+ Le uscite dei due moltiplicatori sono gli ingressi di un sommatore che
+ restituisce un segnale signed, espresso su 65 bit.
+ Esso rappresenta il valore del modulo quadro del numero complesso.
+ Tale segnale è signed, ma, considerato il fatto che la somma di due valori
+ positivi è sicuramente positiva, si può elidere il bit più significativo
+ del risultato che rappresenta il segno, e, dunque, viene considerato un
+ intero unsigned espresso su 64 bit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/multiplier.PNG
+	scale 85
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Schema-del-modulo"
+
+\end_inset
+
+Componente Modulo Quadro
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Succesivamente, i due segnali in uscita al primo stadio vengono processati
+ da un divisore, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Componente-Divisore"
+
+\end_inset
+
+, il quale, secondo le specifiche fornite, restituisce un segnale rappresentato
+ come fixed point a 48 bit, di cui gli 8 più significativi rappresentano
+ la parte intera, i restanti 40 la parte decimale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Divisor.PNG
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Componente-Divisore"
+
+\end_inset
+
+Componente Divisore
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quest'ultimo, dunque, diviene l'input da fornire all'ultimo stadio della
+ catena, rappresentato da un componente che effettua il calcolo di 
+\series bold
+r
+\series default
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Componente-Radice-Quadrata"
+
+\end_inset
+
+.
+ Il componente Radice quadrata fornisce in uscita un segnale unsigned rappresent
+abile su 24 bit dove i 4 bit più significativi rappresentano la parte intera,
+ gli ultimi 20 quella decimale, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Rappresentazione_seg_in"
+
+\end_inset
+
+.
+ Tale rappresentazione del segnale in uscita è stata presa in considerazione
+ nella prima versione del Task proposta.
+ Nelle successive versioni, a causa di un adeguamento delle specifiche di
+ progetto, viene presa in considerazione una diversa rappresentazione del
+ segnale di uscita basata su 24 bit signed, di cui 13 parte intera e 11
+ parte decimale, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Rappresentazione_seg_out-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/sqrt.PNG
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Componente-Radice-Quadrata"
+
+\end_inset
+
+Componente Radice Quadrata
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/rappresentazione_2404.PNG
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Rappresentazione_seg_out"
+
+\end_inset
+
+Rappresentazione di r <24,20>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/rappresentazione_2411.PNG
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Rappresentazione_seg_out-1"
+
+\end_inset
+
+Rappresentazione di r <24,11>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Di seguito, si riportano due frammenti di codice MATLAB in cui sono inglobate
+ le operazioni appena descritte.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=MATLAB,firstnumber=64,caption=Test2DelayDeviationAndA
+lignment.m]
+\end_layout
+
+\begin_layout Plain Layout
+
+%% Delay Deviation Estimation
+\end_layout
+
+\begin_layout Plain Layout
+
+for bbb = 1:nr_block
+\end_layout
+
+\begin_layout Plain Layout
+
+index_P=(1+(bbb-1)*sample_in_P:bbb*sample_in_P);% indeces of the samples
+ in the primary code
+\end_layout
+
+\begin_layout Plain Layout
+
+Data_preConditioned(index_P)= Data_plus_Noise_Block(index_P).*DRR_in_P.*DRR_in_B(b
+bb)*SS_a_p(bbb); % secondary code stripping and doppler removal
+\end_layout
+
+\begin_layout Plain Layout
+
+r(bbb) = abs(sum(Data_preConditioned(index_P).*S_P_Early_1))/ ...
+\end_layout
+
+\begin_layout Plain Layout
+
+        abs(sum(Data_preConditioned(index_P).*S_P_Late_1));  % gating
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+r_avg(bb) = mean(r);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=MATLAB,firstnumber=62,caption="T4dataGenerator.m"]
+\end_layout
+
+\begin_layout Plain Layout
+
+% Compute operations
+\end_layout
+
+\begin_layout Plain Layout
+
+reE2=real(sigEarly).^2;
+\end_layout
+
+\begin_layout Plain Layout
+
+imE2=imag(sigEarly).^2;
+\end_layout
+
+\begin_layout Plain Layout
+
+reL2=real(sigLate).^2;
+\end_layout
+
+\begin_layout Plain Layout
+
+imL2=imag(sigLate).^2;
+\end_layout
+
+\begin_layout Plain Layout
+
+sE=reE2+imE2;
+\end_layout
+
+\begin_layout Plain Layout
+
+sL=reL2+imL2;
+\end_layout
+
+\begin_layout Plain Layout
+
+d1=sE./sL;
+\end_layout
+
+\begin_layout Plain Layout
+
+R=sqrt(d1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Task 4 v1.0
+\end_layout
+
+\begin_layout Standard
+Tale soluzione, che è anche quella più immediata da realizzare, consiste
+ nell'utilizzare solamente IP core realizzati da terze parti: essi vengono
+ forniti direttamente da Xilinx, gratuitamente e presenti nella suite di
+ sviluppo Vivado.
+\end_layout
+
+\begin_layout Subsection
+Design
+\end_layout
+
+\begin_layout Standard
+La soluzione prevede di istanziare i seguenti IP core :
+\end_layout
+
+\begin_layout Itemize
+4 
+\series bold
+Multiplier
+\series default
+ e 2 
+\series bold
+Adder/Subtractor
+\series default
+, per realizzare i primi due componenti paralleli;
+\end_layout
+
+\begin_layout Itemize
+1 
+\series bold
+Divider Generator
+\series default
+, per realizzare l'operatore di divisione;
+\end_layout
+
+\begin_layout Itemize
+1 
+\series bold
+Cordic
+\series default
+, per realizzare l'operatore di radice quadrata.
+\end_layout
+
+\begin_layout Standard
+La fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block-Diagram-v1"
+
+\end_inset
+
+ mostra le istanze di tali componenti e relativi collegamenti tra essi.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/T4_1.1 - add in 64.PNG
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block-Diagram-v1"
+
+\end_inset
+
+Block Diagram relativo ad una prima soluzione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Testbench
+\end_layout
+
+\begin_layout Standard
+Per verificare il funzionamento, viene eseguito un semplice testbench, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Testbench-1"
+
+\end_inset
+
+, fornendo in input al Task una coppia di dati generati in MATLAB.
+ Si può notare come il risultato finale viene restituito in uscita dopo
+ 136 cicli di clock, impostando idealmente un clock in ingresso a 100 Mhz.
+ In questa implementazione, l'uscita r è espressa in una forma fixed point
+ unsigned <24,20>.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/tb_t4_v1.PNG
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Testbench-1"
+
+\end_inset
+
+Testbench
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Analisi soluzione
+\end_layout
+
+\begin_layout Standard
+La soluzione adottata può essere analizzata considerando 2 parametri fondamental
+i: area occupata, frequenza massima di lavoro del circuito.
+ 
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda l'area occupata dal componente complessivo, viene fornita
+ la seguente tabella che riassume l'occupazione dovuta ai singoli IP core
+ dispiegati, nonché quella relativa all'intero Task.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Componente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Multiplier
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1103
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+64
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Adder/Subtractor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+63
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+64
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Divider generator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2036
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4474
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cordic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+673
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+892
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Totale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7248(41%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5750(16%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0(0%)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:AreaSol1-Occupazione-d'area"
+
+\end_inset
+
+Occupazione d'area post-sintesi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Effettuando un'analisi post-implementation, fornendo ad ogni componente
+ un constraint fisico temporale (clock dell'FPGA) si scopre che il modulo
+ che lavora a più basse frequenze, è quello che implementa l'operazione
+ di modulo quadro, che accetta una frequenza massima poco inferiore ai 70
+ Mhz.
+ 
+\end_layout
+
+\begin_layout Subsection
+Vantaggi e svantaggi
+\end_layout
+
+\begin_layout Standard
+Essendo la soluzione totalmente composta da IP core Xilinx, si ottengono
+ una serie di vantaggi come la velocità di dispiegamento della soluzione,
+ l'affidabilità di ogni componente utiizzato, infine, trattandosi appunto
+ di proprietà intellettuali è significativa la facilità nel riuso dei componenti.
+\end_layout
+
+\begin_layout Standard
+Di contro, poiché il primo stadio della catena, a differenza dei successivi,
+ non è dotato di interfaccia AXI Stream, è necessario gestire esternamente
+ i segnali di tvalid e tready sull'interfaccia slave del Divider Generator.
+ Inoltre, dalla tab.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:AreaSol1-Occupazione-d'area"
+
+\end_inset
+
+, è possibile notare come la soluzione proposta occupa molte risorse.
+\end_layout
+
+\begin_layout Section
+Analisi singola su ogni componente
+\end_layout
+
+\begin_layout Standard
+In questa sezione si propone una panoramica su ogni componente della pipeline,
+ prendendo in considerazione per ognuno di essi una serie di alternative
+ e cercando di trovare una combinazione 
+\begin_inset Quotes eld
+\end_inset
+
+vincente
+\begin_inset Quotes erd
+\end_inset
+
+ in termini di area e spazio.
+ Tutto questo non implica che la prima soluzione proposta è da scartare
+ a priori.
+\end_layout
+
+\begin_layout Standard
+La seguente tabella mostra per ogni componente le soluzioni prese in considerazi
+one.
+\end_layout
+
+\begin_layout Standard
+Per ogni singola proposta, viene effettuato uno studio in termini di occupazione
+ d'area, frequenza massima di lavoro e numero di cicli di clock necessari
+ per avere il risultato dell'operazione.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Analisi_componenti.png
+	lyxscale 60
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Componenti analizzati 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Modulo quadro
+\end_layout
+
+\begin_layout Standard
+Così come visto in tab.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Elenco-soluzioni-per"
+
+\end_inset
+
+, per tale componente vengono prese in considerazioni quattro possibili
+ soluzioni.
+ Si ricorda che tale componente, nella catena di elaborazione del task,
+ è quello istanziato nel primo stadio della catena, dove parallelamente
+ vengono calcolati i moduli quadri dei segnali Sum_Early e Sum_Late.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Realizzazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F.max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Cicli di clock
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 Multiplier Xil + Add/Sub Xil
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1283
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+106
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+89.896 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+* e +
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+158
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80.901 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 Booth + Ripple Carry Adder
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+425
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+264
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+82.967 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+128
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 MAC + Ripple Carry Adder
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5468
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+128
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.927 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:AreaSol1-Occupazione-d'area-1"
+
+\end_inset
+
+Occupazione d'area post-implementation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dalla tabella si evince come il componente migliore in termini di occupazione
+ sia quello relativo alla sua descrizione dataflow, in quanto il sintetizzatore
+ 
+\series bold
+UG901
+\series default
+ di Vivado, accorgendosi di operatori matematici, li va ad inferire sui
+ DSP.
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda invece le prestazioni, la scelta del migliore ricade
+ su quello composto da IP core Xilinx con una frequenza massima di lavoro
+ poco inferiore ai 90 MHz.
+ Poiché 3 soluzioni su 4 sono puramente combinatorie, bufferizzando opportunamen
+te ingressi e uscite, il numero di cicli di clock necessari ad avere il
+ risultato pronto è pari a 2.
+ Tranne per la soluzione con moltiplicatore a celle MAC che risulta essere
+ la scelta nettamente peggiore in termini di area e prestazioni, le restanti
+ 3 potrebbero essere prese tranquillamente in considerazione per la realizzazion
+e del Task.
+ Trovando un buon compromesso tra area e frequenza di lavoro, il componente
+ migliore risulta essere quello relativo alla sua descrizione dataflow.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Aggiunta macchina a stati 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Aggiunta-macchina-a"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Avendo scelto un componente combinatorio per il calcolo del modulo quadro
+ nel primo stadio, per ovviare ad uno dei problemi visti nella prima proposta
+ di soluzione, è necessario aggiungere una parte di controllo in modo tale
+ che il componente abbia un'interfaccia del tutto compatibile con un bus
+ AXI Stream, almeno per quanto riguarda i segnali tdata, tvalid e tready.
+ Dunque si wrappa il componente e si aggiungono degli ulteriori segnali,
+ oltre a quelli già presenti.
+ Idealmente, seguendo la filosofia di un generico componente AXI Stream,
+ l'interfaccia black box viene differenziata in Slave e Master.
+ Sull'interfaccia slave vengono posti 3 segnali di cui 2 in ingresso ed
+ 1 in uscita, rispettivamente di 
+\shape slanted
+tdata
+\shape default
+, di 
+\shape slanted
+tvalid
+\shape default
+ e di 
+\shape slanted
+tready
+\shape default
+.
+ Il segnale di input 
+\shape italic
+tvalid
+\shape default
+ indica il fatto che se esso è asserito, il dato in ingresso è valido e
+ la macchina può iniziare ad elaborarlo; viceversa, il segnale di output
+ 
+\shape italic
+tready
+\shape default
+, se pari ad 1, indica che la macchina è pronta ad accettare un nuovo dato,
+ affinché possa essere processato.
+ Sull'interfaccia master invece vi sono 2 segnali in output e 1 di input,
+ in particolare oltre al dato in uscita vi è lo stesso segnale 
+\shape slanted
+tvalid
+\shape default
+ come sullo slave che indica un dato pronto in uscita ed uno 
+\shape italic
+tready
+\shape default
+, il quale indica che un'eventuale dato in uscita è pronto ad essere accettato
+ dal componente posto a valle della catena.
+ 
+\end_layout
+
+\begin_layout Standard
+Entrando nei dettagli, la parte di controllo è interpretata come FSM composta
+ da 4 stadi e può essere descritta come segue: a partire dallo stato inziale
+ di 
+\series bold
+RESET
+\series default
+, essa vi permane finché l'eventuale segnale di reset non viene posto a
+ 1, facendo transitare la macchina nello stato di 
+\series bold
+IDLE
+\series default
+.
+ In questa fase si attende che il segnale di input 
+\shape slanted
+tvalid
+\shape default
+ divenga 1 in modo tale che la macchina combinatoria processi un dato valido,
+ memorizzato appositamente in un buffer di input.
+ Nel transire la macchina passa per lo stato di 
+\series bold
+RESULT_CALCULATION
+\series default
+, dove viene abilitato il buffer in uscita per la memorizzazione del risultato.
+ Successivamente, si entra nello stato di 
+\series bold
+WAIT_M_TREADY
+\series default
+ in cui si attende che il componente a valle segnali che esso è pronto ad
+ accettare un nuovo valore, quindi, se il segnale di ready è pari a 1, allora
+ la macchina torna nello stato di IDLE in attesa di un nuovo dato da elaborare.
+ Si fa notare come da qualsiasi stato è possibile tornare nello stato di
+ RESET all'attivazione dell'omonimo segnale.
+\end_layout
+
+\begin_layout Standard
+In fig.
+ si propone il diagramma a bolle di quanto descritto sopra.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/FSM_Multiplier.PNG
+	lyxscale 60
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Macchina a stati 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Divisore
+\end_layout
+
+\begin_layout Standard
+Il componente preposto all'operazione di divisione nella catena di elaborazione
+ si trova nel secondo stadio della pipe ed effettua il rapporto tra il modulo
+ quadro di Sum_Early e Sum_Late.
+ Per una possibile realizzazione del componente sono prese in considerazione
+ 3 possibili soluzioni mostrate di seguito.
+ Da sottolineare come l'IP core Divider generator offre la possibilità tramite
+ il settaggio del parametro 
+\shape slanted
+Clocks per division 
+\shape default
+di ottenere una macchina diversa in termini di area e prestazioni.
+ In via del tutto sperimentale, viene settato tale parametro con 3 valori
+ differenti e ricavati i valori suddetti.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Divider generator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F.max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Cicli di clock
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Clocks per division = 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7168
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17165
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+163.514 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Clocks per division = 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7089
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9144
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+102.776 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Clocks per division = 8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1819
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2635
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+104.493 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Varianti Divider generator
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La scelta tra i tre ricade sulla terza opzione in quanto, al costo di una
+ maggiore latenza, si ottiene un componente ottimizzato nell'occupazione
+ d'area.
+\end_layout
+
+\begin_layout Standard
+Infine, viene confrontato il suddetto IP core con due soluzioni alternative
+ totalmente custom, come mostrato in tab.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:TabDivOccupazione-d'area-divisor"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Realizzazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F.max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Cicli di clock
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IP core Divider generator 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1819
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2635
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+104.493
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Divisore Non Restoring fixed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5996
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+428
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83,198 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+104
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Descrizione dataflow con operatori /
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6850
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+171
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,407 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:TabDivOccupazione-d'area-divisor"
+
+\end_inset
+
+Occupazione d'area divisori
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Analizzando la tabella si evince come il Divider generator risulta essere
+ la scelta migliore rispetto alle altre in termini di area e frequenza di
+ lavoro, pur pagandone il prezzo rispetto alle altre nel numero di slice
+ register occupate.
+\end_layout
+
+\begin_layout Subsection
+Radice quadrata
+\end_layout
+
+\begin_layout Standard
+Infine, per l'ultimo componente del Task vengono confrontati 3 realizzazioni
+ diverse dell'operatore di radice quadrata.
+ In particolare si confronta l'IP core Xilinx che sfrutta l'algoritmo Cordic
+ con 2 soluzioni che implementano l'algoritmo digit-by-digit per il calcolo
+ del valore di radice.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Realizzazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F.max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Cicli di clock
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cordic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+741
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+403
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+130.056 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Digit-by-digit combinatorio
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1917
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+74
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.818 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Digit-by-digit sequenziale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+202
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+121
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120.642 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Occupazione d'area radice quadrata
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con un buon compromesso tra area occupata e prestazioni, la scelta migliore
+ ricade sul componente che calcola in maniera in maniera sequenziale il
+ risultato sfruttando l'algoritmo digit-by-digit (per ulteriori informazioni
+ si rimanda a 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Digit-by-digit_cal
+culation
+\end_layout
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Subsubsection
+Implementazione come FSM dell' Algoritmo digit-by-digit
+\end_layout
+
+\begin_layout Standard
+Come da titolo, il componente che realizza la radice quadrata è implementato
+ secondo la logica di una macchina a stati finiti.
+ Per renderlo compatibile con bus AXI Stream ed altri componenti che vi
+ si interfacciano con esso, vengono aggiunti gli stessi segnali di input/output
+ come descritto in cap.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Aggiunta-macchina-a"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Di seguito, in fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Macchina-a-stati"
+
+\end_inset
+
+, si propone il diagramma che descrive la FSM.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/FSM_SQRT.PNG
+	lyxscale 60
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Macchina-a-stati"
+
+\end_inset
+
+Macchina a stati digit-by-digit
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A partire dallo stato inziale di 
+\series bold
+IDLE
+\series default
+, la macchina vi permane fintantoché il segnale di 
+\shape italic
+tvalid
+\shape default
+ sull'interfaccia slave è pari a 0, oppure viene asserito il segnale di
+ reset.
+ Una volta che il 
+\shape italic
+tvalid
+\shape default
+ diviene pari a 1, la macchina transita nello stato di 
+\series bold
+SHIFT
+\series default
+ dove viene effettuata la seguente operazione: a partire da un valore che
+ indica la precisione del calcolo, 
+\shape italic
+one
+\shape default
+, su di esso viene effettuato uno shift a destra di 2 posizioni fino a quando
+ non si ottiene la più grande potenza di 4 più piccola del radicando.
+ Una volta trovato tale valore, la macchina passa nello stato di 
+\series bold
+RESULT_CALCULATION
+\series default
+ in cui viene effettuato il calcolo della radice secondo la logica dell'algoritm
+o.
+ Una volta determinata la radice (il segnale 
+\shape slanted
+one è 
+\shape default
+pari a 0), si passa nello stato di 
+\series bold
+WAIT_M_TREADY
+\series default
+ in cui in uscita viene settato ad 1 il valore di 
+\shape slanted
+tvalid
+\shape default
+ e si attende che il componente a valle asserisca il segnale di 
+\shape slanted
+tready
+\shape default
+.
+\end_layout
+
+\end_body
+\end_document
