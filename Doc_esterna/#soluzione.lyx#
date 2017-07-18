@@ -707,7 +707,7 @@ status open
 \begin_inset Graphics
 	filename images/T4_1.1 - add in 64.PNG
 	lyxscale 60
-	scale 60
+	scale 45
 
 \end_inset
 
@@ -730,6 +730,1729 @@ Block Diagram relativo ad una prima soluzione
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Codice
+\end_layout
+
+\begin_layout Standard
+Di seguito si riportano unicamente i codici VHDL scritti manualmente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption= "Task4v1.0"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v1_0/src/Task4_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente include tutte le funzionalità che deve eseguire
+ il
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Task 4.
+ In particolare, in ingresso al componente vengono forniti
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        2 segnali complessi espressi su 64 bit (32 Im, 32 Re); in uscita,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        invece, è reso disponibile un segnale contenente la radice del
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        rapporto del modulo quadro dei due segnali di ingresso.
+ Tale segnale
+\end_layout
+
+\begin_layout Plain Layout
+
+--!	   è espresso su 24 bit, di cui 13 sono la parte intera, 11 quella
+\end_layout
+
+\begin_layout Plain Layout
+
+--!	   decimale.
+ Tutto il componente è realizzato in modo tale da essere 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        compatibile con interfaccia AXI4 Stream.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk : in STD_LOGIC;                                        
+ --! Segnale di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;                                     
+ --! Reset sincrono, attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tvalid :  in STD_LOGIC;                    
+ --! Se alto, il dato sum_early è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tready :  out STD_LOGIC;                   
+ --! Se alto il componente è pronto a ricevere sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tdata : in STD_LOGIC_VECTOR (63 downto 0); 
+ --! Segnale di input rappresentante sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tvalid :  in STD_LOGIC;                     
+ --! Se alto, il dato sum_late è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tready :  out STD_LOGIC;                    
+ --! Se alto il componente è pronto a ricevere sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tdata : in STD_LOGIC_VECTOR (63 downto 0);  
+ --! Segnale di input rappresentante sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tvalid: out std_logic;                             
+ --! Se alto, il dato r in output è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tready: in std_logic;                              
+ --! Se alto, il componente a valle è pronto a ricevere il dato r
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tdata : out STD_LOGIC_VECTOR (23 downto 0)         
+ --! Segnale di output rappresentante r
+\end_layout
+
+\begin_layout Plain Layout
+
+           );
+\end_layout
+
+\begin_layout Plain Layout
+
+end Task4_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Structural of Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------Absolute Square Component------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Absolute_Square_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata : out STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready : in STD_LOGIC);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+---------------------------Divisor Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+   component AXI4_Stream_Divider_m IS
+\end_layout
+
+\begin_layout Plain Layout
+
+      PORT (
+\end_layout
+
+\begin_layout Plain Layout
+
+        aclk : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        aresetn : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tvalid : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tready : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tdata : OUT STD_LOGIC_VECTOR(103 DOWNTO 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      );
+\end_layout
+
+\begin_layout Plain Layout
+
+    END component;
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------Square Root Component-------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Square_Root_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aclk    : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Slave signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid  : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready   : out  STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata  : in   STD_LOGIC_VECTOR (47 downto 0);
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Master signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tvalid : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tready : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tdata : out  STD_LOGIC_VECTOR (23 downto 0));
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per i due componenti che realizzano il modulo quadro
+ di Sum_Early e Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per il componente che realizza la divisione tra il
+ modulo di Sum_Early e il modulo di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tdata : std_logic_vector(103 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnale ausiliare per gestire il dato in uscita da rappresentare su
+ 24 bit,
+\end_layout
+
+\begin_layout Plain Layout
+
+--! di cui 13 costituiscono la parte intera e 11 quella decimale.
+\end_layout
+
+\begin_layout Plain Layout
+
+signal root_value : std_logic_vector (23 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_EARLY:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata => s_axis_sum_early_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid => s_axis_sum_early_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready => s_axis_sum_early_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready => early2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+               
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_LATE:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+       PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => s_axis_sum_late_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => s_axis_sum_late_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => s_axis_sum_late_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tready => late2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+DIVIDER: AXI4_Stream_Divider_m
+\end_layout
+
+\begin_layout Plain Layout
+
+          PORT MAP(
+\end_layout
+
+\begin_layout Plain Layout
+
+                aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+                aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tready => late2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tready => early2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tdata => quozient_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+SQUARE_ROOT: AXI4_Stream_Square_Root_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => quozient_tdata(47 downto 0),     
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tvalid => m_axis_r_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tready => m_axis_r_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tdata => root_value);
+\end_layout
+
+\begin_layout Plain Layout
+
+              
+\end_layout
+
+\begin_layout Plain Layout
+
+m_axis_r_tdata <= "000000000" & root_value(23 downto 9);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Structural;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption= "modulo quadro"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v1_0/src/modulo_quadro.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Il componente realizza il modulo quadro di un segnale complesso.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Esso è realizzato utilizzando unicamente IP-Core messi a disposizione
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        dalla Xilinx.
+ Pertanto, la filosofia di progetto utilizzata è quella 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Strutturale.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity modulo_quadro is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( Re_Early : in STD_LOGIC_VECTOR (31 downto 0);    --! Parte reale
+ del segnale Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+           Im_Early : in STD_LOGIC_VECTOR (31 downto 0);    --! Parte immaginari
+a del segnale Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+           Re_Late : in STD_LOGIC_VECTOR (31 downto 0);     --! Parte reale
+ del segnale Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+           Im_Late : in STD_LOGIC_VECTOR (31 downto 0);     --! Parte immaginari
+a del segnale Sum_Late  
+\end_layout
+
+\begin_layout Plain Layout
+
+           Early2 : out STD_LOGIC_VECTOR (63 downto 0);     --! Modulo quadro
+ del segnale Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+           Late2 : out STD_LOGIC_VECTOR (63 downto 0);      --! Modulo quadro
+ del segnale Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset: in std_logic;                             --! Reset sincrono,
+ attivo alto
+\end_layout
+
+\begin_layout Plain Layout
+
+           clk : in STD_LOGIC);                             --! Segnale
+ di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+end modulo_quadro;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Behavioral of modulo_quadro is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------Moltiplicator Component-------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component Square IS
+\end_layout
+
+\begin_layout Plain Layout
+
+      PORT (
+\end_layout
+
+\begin_layout Plain Layout
+
+        CLK : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        SCLR : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        P : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      );
+\end_layout
+
+\begin_layout Plain Layout
+
+    END component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------------Adder Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    COMPONENT c_addsub_0 IS
+\end_layout
+
+\begin_layout Plain Layout
+
+      PORT (
+\end_layout
+
+\begin_layout Plain Layout
+
+        A : IN STD_LOGIC_VECTOR(62 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        B : IN STD_LOGIC_VECTOR(62 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        CLK : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        SCLR : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        S : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      );
+\end_layout
+
+\begin_layout Plain Layout
+
+    END COMPONENT;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Segnali ausiliari utilizzati per collegare i 2 moltiplicatori con
+ l'addizionatore, per realizzare il singolo modulo quadro
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal ReL2_buffer: std_logic_vector(63 downto 0);  --! Quadrato della
+ parte reale di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal ImL2_buffer: std_logic_vector(63 downto 0);  --! Quadrato della
+ parte immaginaria di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal ReE2_buffer: std_logic_vector(63 downto 0);  --! Quadrato della
+ parte reale di Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal ImE2_buffer: std_logic_vector(63 downto 0);  --! Quadrato della
+ parte immaginaria di Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Moltiplicatore che realizza il quadrato della parte reale di Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+RE2E: Square
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>Re_Early,
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>Re_Early,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    P=>ReE2_buffer
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Moltiplicatore che realizza il quadrato della parte immaginaria di Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+IM2E: Square
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>Im_Early,
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>Im_Early,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    P=>ImE2_buffer
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Addizionatore che, sommando il quadrato della parte reale e immaginaria
+ di Sum_Early, realizza il modulo quadro del segnale in oggetto
+\end_layout
+
+\begin_layout Plain Layout
+
+E2: c_addsub_0
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>ReE2_buffer(62 downto 0),
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>ImE2_buffer(62 downto 0),
+\end_layout
+
+\begin_layout Plain Layout
+
+    S=>Early2
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Moltiplicatore che realizza il quadrato della parte reale di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+RE2L: Square
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>Re_Late,
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>Re_Late,
+\end_layout
+
+\begin_layout Plain Layout
+
+    P=>ReL2_buffer
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Moltiplicatore che realizza il quadrato della parte immaginaria di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+IM2L: Square
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>Im_Late,
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>Im_Late,
+\end_layout
+
+\begin_layout Plain Layout
+
+    P=>ImL2_buffer
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Addizionatore che, sommando il quadrato della parte reale e immaginaria
+ di Sum_Late, realizza il modulo quadro del segnale in oggetto
+\end_layout
+
+\begin_layout Plain Layout
+
+L2: c_addsub_0
+\end_layout
+
+\begin_layout Plain Layout
+
+  PORT map(
+\end_layout
+
+\begin_layout Plain Layout
+
+    CLK=>clk,
+\end_layout
+
+\begin_layout Plain Layout
+
+    SCLR=>reset,
+\end_layout
+
+\begin_layout Plain Layout
+
+    A=>ReL2_buffer(62 downto 0),
+\end_layout
+
+\begin_layout Plain Layout
+
+    B=>ImL2_buffer(62 downto 0),
+\end_layout
+
+\begin_layout Plain Layout
+
+    S=>Late2
+\end_layout
+
+\begin_layout Plain Layout
+
+  );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Behavioral;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
 \end_layout
 
 \end_inset
@@ -1108,9 +2831,67 @@ Occupazione d'area post-sintesi
 Effettuando un'analisi post-implementation, fornendo ad ogni componente
  un constraint fisico temporale (clock dell'FPGA) si scopre che il modulo
  che lavora a più basse frequenze, è quello che implementa l'operazione
- di modulo quadro, che accetta una frequenza massima poco inferiore ai 70
- Mhz.
+ di modulo quadro, che accetta una frequenza massima 
+\begin_inset Formula $69,686Mhz$
+\end_inset
+
+.
+ Come si può infatti notare dalla fig.
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: freq"
+
+\end_inset
+
+, il path con il più alto delay presenta una slack negativa di 
+\begin_inset Formula $-4.350ns$
+\end_inset
+
+ da dover aggiungere in modulo al periodo di clock di riferimento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Frequenza_max_Xil.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: freq"
+
+\end_inset
+
+Most negative slack 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tale frequenza, chiaramente, sarà la stessa a cui viene garantito il corretto
+ funzionamento dell'intero circuito.
 \end_layout
 
 \begin_layout Subsection
@@ -1164,172 +2945,24 @@ one.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float table
+Per ogni singola proposta, viene effettuato uno studio in termini di occupazione
+ d'area, frequenza massima di lavoro e numero di cicli di clock necessari
+ per avere il risultato dell'operazione.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-Modulo quadro
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-Divisore
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-Radice quadrata
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2 IP core Multiplier + IP core Adder/Subtractor
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-IP core Divider Generator
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-IP core Cordic
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Descrizione dataflow con operatori * e +
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Divisore Non Restoring
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Algoritmo Digit-by-Digit Customizzato Combinatorio
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2 Booth + Ripple Carry Adder
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Descrizione dataflow con operatore /
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Algoritmo Digit-by-Digit Customizzato Sequenziale
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2 MAC + Ripple Carry Adder
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
+\begin_inset Graphics
+	filename images/Analisi_componenti.png
+	lyxscale 60
+	scale 40
 
 \end_inset
 
@@ -1337,13 +2970,7 @@ Algoritmo Digit-by-Digit Customizzato Sequenziale
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:Elenco-soluzioni-per"
-
-\end_inset
-
-Elenco soluzioni per ogni modulo
+Componenti analizzati 
 \end_layout
 
 \end_inset
@@ -1354,12 +2981,6 @@ Elenco soluzioni per ogni modulo
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Per ogni singola proposta, viene effettuato uno studio in termini di occupazione
- d'area, frequenza massima di lavoro e numero di cicli di clock necessari
- per avere il risultato dell'operazione.
 \end_layout
 
 \begin_layout Subsection
@@ -1472,7 +3093,7 @@ Cicli di clock
 \begin_inset Text
 
 \begin_layout Plain Layout
-2 IP core Multiplier + IP core Adder/Subtractor
+2 Multiplier Xil + Add/Sub Xil
 \end_layout
 
 \end_inset
@@ -1528,7 +3149,7 @@ Cicli di clock
 \begin_inset Text
 
 \begin_layout Plain Layout
-Descrizione dataflow con operatori * e +
+* e +
 \end_layout
 
 \end_inset
@@ -1851,7 +3472,7 @@ In fig.
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2639,7 +4260,7 @@ Cordic
 \begin_inset Text
 
 \begin_layout Plain Layout
-Algoritmo digit-by-digit combinatorio
+Digit-by-digit combinatorio
 \end_layout
 
 \end_inset
@@ -2695,7 +4316,7 @@ Algoritmo digit-by-digit combinatorio
 \begin_inset Text
 
 \begin_layout Plain Layout
-Algoritmo digit-by-digit sequenziale
+Digit-by-digit sequenziale
 \end_layout
 
 \end_inset
@@ -2875,27 +4496,7209 @@ tvalid
 SHIFT
 \series default
  dove viene effettuata la seguente operazione: a partire da un valore che
- indica la precisione del calcolo, su di esso viene effettuato uno shift
- a destra di 2 posizioni fino a quando non si ottiene un valore la cui potenza
- di 4 è la più grande tra i valori minori del radicando.
- Una volta trovato tale valore, la macchina passa nello stato di RESULT_CALCULAT
-ION in cui viene effettuato il calcolo della radice secondo la logica dell'algor
-itmo.
- Una volta determinata la radice (segnale 
-\shape slanted
+ indica la precisione del calcolo, 
+\shape italic
 one
 \shape default
- pari a 0), si passa nello stato di WAIT_M_TREADY in cui in uscita viene
- settato il valore di 
+, su di esso viene effettuato uno shift a destra di 2 posizioni fino a quando
+ non si ottiene la più grande potenza di 4 più piccola del radicando.
+ Una volta trovato tale valore, la macchina passa nello stato di 
+\series bold
+RESULT_CALCULATION
+\series default
+ in cui viene effettuato il calcolo della radice secondo la logica dell'algoritm
+o.
+ Una volta determinata la radice (il segnale 
 \shape slanted
-valid
+one è 
 \shape default
- del risultato finale e viene atteso che il componente a valle asserisce
- il segnale di 
+pari a 0), si passa nello stato di 
+\series bold
+WAIT_M_TREADY
+\series default
+ in cui in uscita viene settato ad 1 il valore di 
 \shape slanted
-ready
+tvalid
+\shape default
+ e si attende che il componente a valle asserisca il segnale di 
+\shape slanted
+tready
 \shape default
 .
+\end_layout
+
+\begin_layout Section
+Task 4 v2.0
+\end_layout
+
+\begin_layout Standard
+Tale soluzione deriva direttamente dallo studio effettuato sui singoli moduli
+ del Task 4, presentato accuratamente nella sezione precedente.
+ Inoltre, si ricorda, che il segnale di uscita r è rappresentato come signed
+ su 24 bit, di cui 13 parte intera, 11 decimale.
+\end_layout
+
+\begin_layout Subsection
+Design
+\end_layout
+
+\begin_layout Standard
+La soluzione prevede di istanziare i seguenti IP core :
+\end_layout
+
+\begin_layout Itemize
+2 
+\series bold
+Absolute Square
+\series default
+, che utilizzano gli operatori + e * inferiti su DSP;
+\end_layout
+
+\begin_layout Itemize
+1 
+\series bold
+Divider Generator
+\series default
+, per realizzare l'operatore di divisione;
+\end_layout
+
+\begin_layout Itemize
+1
+\series bold
+ Square
+\series default
+ 
+\series bold
+Root
+\series default
+, che, facendo uso dell'algoritmo digit-by-digit, calcola la radice quadrata.
+\end_layout
+
+\begin_layout Standard
+La fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block-Diagram-v1-1"
+
+\end_inset
+
+ mostra le istanze di tali componenti e relativi collegamenti tra essi.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/T4_2.0.PNG
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block-Diagram-v1-1"
+
+\end_inset
+
+Block Diagram relativo ad una seconda soluzione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Codice
+\end_layout
+
+\begin_layout Standard
+Di seguito si riportano unicamente i codici VHDL scritti manualmente.
+\end_layout
+
+\begin_layout Subsubsection
+Top Module
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption="Task4v2.0"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/Task4_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente include tutte le funzionalità che deve eseguire
+ il
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Task 4.
+ In particolare, in ingresso al componente vengono forniti
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        2 segnali complessi espressi su 64 bit (32 Im, 32 Re); in uscita,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        invece, è reso disponibile un segnale contenente la radice del
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        rapporto del modulo quadro dei due segnali di ingresso.
+ Tale segnale
+\end_layout
+
+\begin_layout Plain Layout
+
+--!	   è espresso su 24 bit, di cui 13 sono la parte intera, 11 quella
+\end_layout
+
+\begin_layout Plain Layout
+
+--!	   decimale.
+ Tutto il componente è realizzato in modo tale da essere 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        compatibile con interfaccia AXI4 Stream.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk : in STD_LOGIC;                                        
+ --! Segnale di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;                                     
+ --! Reset sincrono, attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tvalid :  in STD_LOGIC;                    
+ --! Se alto, il dato sum_early è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tready :  out STD_LOGIC;                   
+ --! Se alto il componente è pronto a ricevere sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tdata : in STD_LOGIC_VECTOR (63 downto 0); 
+ --! Segnale di input rappresentante sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tvalid :  in STD_LOGIC;                     
+ --! Se alto, il dato sum_late è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tready :  out STD_LOGIC;                    
+ --! Se alto il componente è pronto a ricevere sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tdata : in STD_LOGIC_VECTOR (63 downto 0);  
+ --! Segnale di input rappresentante sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tvalid: out std_logic;                             
+ --! Se alto, il dato r in output è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tready: in std_logic;                              
+ --! Se alto, il componente a valle è pronto a ricevere il dato r
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tdata : out STD_LOGIC_VECTOR (23 downto 0)         
+ --! Segnale di output rappresentante r
+\end_layout
+
+\begin_layout Plain Layout
+
+           );
+\end_layout
+
+\begin_layout Plain Layout
+
+end Task4_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Structural of Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------Absolute Square Component------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Absolute_Square_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata : out STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready : in STD_LOGIC);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+---------------------------Divisor Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+   component AXI4_Stream_Divider_m IS
+\end_layout
+
+\begin_layout Plain Layout
+
+      PORT (
+\end_layout
+
+\begin_layout Plain Layout
+
+        aclk : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        aresetn : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tvalid : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tready : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tdata : OUT STD_LOGIC_VECTOR(103 DOWNTO 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      );
+\end_layout
+
+\begin_layout Plain Layout
+
+    END component;
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------Square Root Component-------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Square_Root_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aclk    : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Slave signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid  : in   STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready   : out  STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata  : in   STD_LOGIC_VECTOR (47 downto 0);
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Master signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tvalid : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tready : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tdata : out  STD_LOGIC_VECTOR (23 downto 0));
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per i due componenti che realizzano il modulo quadro
+ di Sum_Early e Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per il componente che realizza la divisione tra il
+ modulo di Sum_Early e il modulo di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tdata : std_logic_vector(103 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnale ausiliare per gestire il dato in uscita da rappresentare su
+ 24 bit,
+\end_layout
+
+\begin_layout Plain Layout
+
+--! di cui 13 costituiscono la parte intera e 11 quella decimale.
+\end_layout
+
+\begin_layout Plain Layout
+
+signal root_value : std_logic_vector (23 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_EARLY:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata => s_axis_sum_early_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid => s_axis_sum_early_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready => s_axis_sum_early_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready => early2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+               
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_LATE:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+       PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => s_axis_sum_late_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => s_axis_sum_late_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => s_axis_sum_late_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tready => late2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+DIVIDER: AXI4_Stream_Divider_m
+\end_layout
+
+\begin_layout Plain Layout
+
+          PORT MAP(
+\end_layout
+
+\begin_layout Plain Layout
+
+                aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+                aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tready => late2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tready => early2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tdata => quozient_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+SQUARE_ROOT: AXI4_Stream_Square_Root_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => quozient_tdata(47 downto 0),     
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tvalid => m_axis_r_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tready => m_axis_r_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tdata => root_value);
+\end_layout
+
+\begin_layout Plain Layout
+
+              
+\end_layout
+
+\begin_layout Plain Layout
+
+m_axis_r_tdata <= "000000000" & root_value(23 downto 9);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Structural;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+AXI4 Stream Absolute Square 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption="AXI4 Stream Absolute Square"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/AXI4_Stream_Absolute_Square_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Il componente riceve in ingresso un segnale complesso, avente
+ parte reale
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        e parte immaginaria su 32 bit, e ne calcola il modulo quadro.
+ Esso, 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        attraverso l'utilizzo dei segnali tvalid, tready  e tdata, è
+ compatibile
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        con interfaccia AXI4 Stream.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity AXI4_Stream_Absolute_Square_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aresetn : in STD_LOGIC;                                  --!
+ Reset del componente, sincrono e attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           aclk : in STD_LOGIC;                                     --!
+ Segnale di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia AXI4 Stream Slave
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);  --!
+ Dato in ingresso espresso su 64 bit (32 Im, 32 Re)
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tvalid : in STD_LOGIC;                      --!
+ Se alto, il dato in input è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tready : out STD_LOGIC;                     --!
+ Se alto, si è pronti ad accettare il tdata in input
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia AXI4 Stream Master
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tdata : out STD_LOGIC_VECTOR (63 downto 0);--!
+ Valore del modulo quadro calcolato
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tvalid : out STD_LOGIC;                    --!
+ Se alto, il segnale tdata in output è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tready : in STD_LOGIC);                    --!
+ Se alto il componente a valle è pronto ad accettare il tdata in output
+\end_layout
+
+\begin_layout Plain Layout
+
+end AXI4_Stream_Absolute_Square_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Structural of AXI4_Stream_Absolute_Square_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------Control Unit Component--------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component abs_sqr_control_unit_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tvalid : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tready : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_in : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_out : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_in_n : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_out_n : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tready : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tvalid : out STD_LOGIC);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+----------------------Operative Part Component--------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+    component abs_sqr_operative_part_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               enable_buffer_in : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               enable_buffer_out : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               reset_buffer_in_n : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               reset_buffer_out_n : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata : out STD_LOGIC_VECTOR(63 downto 0));
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Segnali ausiliari per collegare la Parte Operativa alla parte di
+ controllo
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal enable_buffer_in : std_logic :='0';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal enable_buffer_out : std_logic :='0';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal reset_buffer_in_n : STD_LOGIC:='1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal reset_buffer_out_n : STD_LOGIC:='1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    CONTROL_UNIT_INST : abs_sqr_control_unit_m port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+        aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+        aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_value_tvalid => s_axis_value_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_abssqr_tready => m_axis_abssqr_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable_buffer_in => enable_buffer_in,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable_buffer_out => enable_buffer_out,
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_value_tready => s_axis_value_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_buffer_out_n => reset_buffer_out_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_buffer_in_n => reset_buffer_in_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_abssqr_tvalid => m_axis_abssqr_tvalid);
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+    OPERATIVE_UNIT_INST : abs_sqr_operative_part_m port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_value_tdata => s_axis_value_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+        aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+        aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable_buffer_in => enable_buffer_in,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable_buffer_out => enable_buffer_out,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_buffer_out_n => reset_buffer_out_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_buffer_in_n => reset_buffer_in_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_abssqr_tdata => m_axis_abssqr_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Structural;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Control Part
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption= "Control Part"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/abs_sqr_control_unit_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente realizza una FSM per il controllo del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        che si occupa di calcolare il modulo quadro di un numero.
+ Tale macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        a stati si è resa necessaria, per interfacciare il componente
+ con AXI4 Stream.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity abs_sqr_control_unit_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk : in STD_LOGIC;                     --! Segnale di temporizzazio
+ne della FSM
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;                  --! Reset della FSM,
+ sincrono e attivo bass
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tvalid : in STD_LOGIC;      --! Se alto, vuol dire
+ che il dato di input all'interfaccia slave è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tready : in STD_LOGIC;     --! Se alto, vuol dire
+ che il componente che si trova a valle è pronto a ricevere il dato di output
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_in : out STD_LOGIC;        --! Se alto, abilita
+ a scrivere nel buffer di input della macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_out : out STD_LOGIC;       --! Se alto, abilita
+ a scrivere nel buffer di output della macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_in_n : out STD_LOGIC;       --! Reset sincrono per
+ il buffer di input della macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_out_n : out STD_LOGIC;      --! Reset sincrono per
+ il buffer di output della macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tready : out STD_LOGIC;     --! Se alto, vuol dire
+ che l'interfaccia slave è pronta a ricevere un dato
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tvalid : out STD_LOGIC);   --! Se alto, vuol dire
+ che il dato in uscita dall'interfaccia master è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+end abs_sqr_control_unit_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Behavioral of abs_sqr_control_unit_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    type state_type is(RESET,IDLE,RESULT_CALCULATION,WAIT_M_TREADY);
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal current_state, next_state : state_type := RESET;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------------Sync Process-------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Questo process realizza la sincronizzazione degli stati con il segnale
+\end_layout
+
+\begin_layout Plain Layout
+
+--! di temporizzazione.
+ Ogni volta che si verifica un rising_edge la FSM
+\end_layout
+
+\begin_layout Plain Layout
+
+--! entra nello stato definito in next_state
+\end_layout
+
+\begin_layout Plain Layout
+
+    SYNC_PROCESS : process(aclk)
+\end_layout
+
+\begin_layout Plain Layout
+
+        begin
+\end_layout
+
+\begin_layout Plain Layout
+
+            if(rising_edge(aclk))then
+\end_layout
+
+\begin_layout Plain Layout
+
+                if(aresetn='0')then                 --! Se il segnale di
+ reset è attivo, la FSM entra nello stato di RESET
+\end_layout
+
+\begin_layout Plain Layout
+
+                    current_state <= RESET;
+\end_layout
+
+\begin_layout Plain Layout
+
+                else
+\end_layout
+
+\begin_layout Plain Layout
+
+                    current_state <= next_state;    --! altrimenti entra
+ nello stato definito in next_state
+\end_layout
+
+\begin_layout Plain Layout
+
+                end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+            end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+    end process SYNC_PROCESS;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------Output Decode Process---------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! In questo process vengono definiti i valori dei segnali di output 
+\end_layout
+
+\begin_layout Plain Layout
+
+--! della FSM
+\end_layout
+
+\begin_layout Plain Layout
+
+    OUTPUT_DECODE : process(current_state)
+\end_layout
+
+\begin_layout Plain Layout
+
+        begin
+\end_layout
+
+\begin_layout Plain Layout
+
+            case(current_state) is
+\end_layout
+
+\begin_layout Plain Layout
+
+                when RESET => 
+\end_layout
+
+\begin_layout Plain Layout
+
+                    enable_buffer_in <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                    enable_buffer_out <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                    s_axis_value_tready <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                    m_axis_abssqr_tvalid <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                    reset_buffer_in_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                    reset_buffer_out_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                when IDLE =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_in <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_out <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     s_axis_value_tready <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     m_axis_abssqr_tvalid <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_in_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_out_n <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                 when RESULT_CALCULATION =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_in <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_out <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     s_axis_value_tready <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     m_axis_abssqr_tvalid <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_in_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_out_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                  when WAIT_M_TREADY =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_in <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     enable_buffer_out <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     s_axis_value_tready <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     m_axis_abssqr_tvalid <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_in_n <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+                     reset_buffer_out_n <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+            end case;
+\end_layout
+
+\begin_layout Plain Layout
+
+    end process OUTPUT_DECODE;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------Next State Process----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+--! In questo process viene definito chi deve essere lo stato successivo
+\end_layout
+
+\begin_layout Plain Layout
+
+--! in cui la FSM deve entrare, in base ai segnali di input
+\end_layout
+
+\begin_layout Plain Layout
+
+    NEXT_STATE_DECODE : process(current_state,s_axis_value_tvalid,m_axis_abssqr_
+tready,aresetn)
+\end_layout
+
+\begin_layout Plain Layout
+
+        begin
+\end_layout
+
+\begin_layout Plain Layout
+
+            case(current_state)is
+\end_layout
+
+\begin_layout Plain Layout
+
+                when RESET =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if(aresetn='0')then
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= RESET;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    else
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= IDLE;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                when IDLE =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if(s_axis_value_tvalid='0')then
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= IDLE;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    else
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= RESULT_CALCULATION;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                when RESULT_CALCULATION =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    next_state <= WAIT_M_TREADY;
+\end_layout
+
+\begin_layout Plain Layout
+
+                when WAIT_M_TREADY =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if(m_axis_abssqr_tready='0')then
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= WAIT_M_TREADY;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     else
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= IDLE;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+             end case;
+\end_layout
+
+\begin_layout Plain Layout
+
+    end process;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Behavioral;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Operative Part
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption= "Operative Part"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/abs_sqr_operative_part_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente ingloba in sè tutta la parte operativa del
+ componente
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        AXI4_Stream_Absolute_Square_m.
+ Al suo interno sono presenti 2 registri,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        che funzionano da buffer di ingresso e uscita; la logica comportament
+ale
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        che realizza l'operazione di modulo quadro.
+\end_layout
+
+\begin_layout Plain Layout
+
+-------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity abs_sqr_operative_part_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);     
+ --! Valore di ingresso di cui si vuole calcolare il modulo quadro
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;                                     
+ --! Reset sincrono esterno, attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           aclk : in STD_LOGIC;                                        
+ --! Segnale di temporizzazione della macchina
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_in : in STD_LOGIC;                            
+ --! Segnale di enable, che abilita il funzionamento del buffer di ingresso
+\end_layout
+
+\begin_layout Plain Layout
+
+           enable_buffer_out : in STD_LOGIC;                           
+ --! Segnale di enable, che abilita il funzionamento del buffer di uscita
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_in_n : in STD_LOGIC;                           
+ --! Reset al buffer di ingresso, sincrono, proveniente dalla FSM, attivo
+ basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           reset_buffer_out_n : in STD_LOGIC;                          
+ --! Reset al buffer di uscita, sincrono, proveniente dalla FSM, attivo
+ basso    
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_abssqr_tdata : out STD_LOGIC_VECTOR(63 downto 0));   
+ --! Valore di uscita rappresentante il modulo quadro calcolato
+\end_layout
+
+\begin_layout Plain Layout
+
+end abs_sqr_operative_part_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Structural of abs_sqr_operative_part_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------Modulo Quadro Component-------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component mod_quad_oper is
+\end_layout
+
+\begin_layout Plain Layout
+
+    generic(n: natural:=32);
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( Im : in STD_LOGIC_VECTOR (n-1 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+           Re : in STD_LOGIC_VECTOR (n-1 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+           modulo2 : out STD_LOGIC_VECTOR (2*n -1 downto 0));
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------Register Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    component register_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        generic(N : natural:=64);
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( data_in : in STD_LOGIC_VECTOR (N-1 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               enable : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               reset_n : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               data_out : out STD_LOGIC_VECTOR (N-1 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               clock : in STD_LOGIC);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per la gestione del circuito e i corretti collegamenti
+\end_layout
+
+\begin_layout Plain Layout
+
+--! tra i vari componenti    
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal real_part : std_logic_vector(31 downto 0):=(others=>'0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal imag_part : std_logic_vector(31 downto 0):=(others=>'0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal result : std_logic_vector(63 downto 0):=(others=>'0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal operand : std_logic_vector(63 downto 0):=(others=>'0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal reset_in_n : std_logic := '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal reset_out_n : std_logic := '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    reset_in_n <= aresetn and reset_buffer_in_n;
+\end_layout
+
+\begin_layout Plain Layout
+
+    BUFFER_IN_INST : register_m port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+        data_in => s_axis_value_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable => enable_buffer_in,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_n => reset_in_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        data_out => operand,
+\end_layout
+
+\begin_layout Plain Layout
+
+        clock => aclk);
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+    imag_part <= operand(63 downto 32);
+\end_layout
+
+\begin_layout Plain Layout
+
+    real_part <= operand(31 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+    SQUARE_INST :mod_quad_oper port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+        Im => imag_part,
+\end_layout
+
+\begin_layout Plain Layout
+
+        Re => real_part,
+\end_layout
+
+\begin_layout Plain Layout
+
+        modulo2 => result);
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    reset_out_n <= aresetn and reset_buffer_out_n;
+\end_layout
+
+\begin_layout Plain Layout
+
+    BUFFER_OUT_INST : register_m port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+        data_in => result,
+\end_layout
+
+\begin_layout Plain Layout
+
+        enable => enable_buffer_out,
+\end_layout
+
+\begin_layout Plain Layout
+
+        reset_n => reset_out_n,
+\end_layout
+
+\begin_layout Plain Layout
+
+        data_out => m_axis_abssqr_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+        clock => aclk);    
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+end Structural;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Modulo Quadro
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption="modulo quadro"] ---------------------
+-----------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/mod_quad_oper.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente realizza il modulo quadro di un numero compmlesso.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Si presuppone che sia la parte reale sia quella immaginaria del
+ numero 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        siano rappresentate entrambe sullo stesso numero di bit, in notazione
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        signed integer.
+ Si precisa, a tal proposito, che ai fini del progetto,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        essendo il modulo un numero positivo e nell'ottica del risparmio
+ di spazio,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        questo componente tronca l'ultimo bit di uscita, che si sa apriori
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        essere nullo.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Per la sua realizzazione, è stata utilizzata una filosofia di
+ progetto 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        dataflow, in questo modo il sintetizzatore UG901 di Vivado cerca
+ di 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        inferire, lì dove possibile, le DSP48E presenti sulla Zynq Zybo.
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.NUMERIC_STD.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity mod_quad_oper is
+\end_layout
+
+\begin_layout Plain Layout
+
+    generic(n: natural:=32);                                    --! Specifica
+ la dimensione, n, su cui deve essere rappresentata la parte reale e immaginaria
+ del numero
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( Im : in STD_LOGIC_VECTOR (n-1 downto 0);             --! Specifica
+ la parte immaginaria del numero, espressa su n bit
+\end_layout
+
+\begin_layout Plain Layout
+
+           Re : in STD_LOGIC_VECTOR (n-1 downto 0);             --! Specifica
+ la parte reale del numero, espressa su n bit
+\end_layout
+
+\begin_layout Plain Layout
+
+           modulo2 : out STD_LOGIC_VECTOR (2*n -1 downto 0));   --! Specifica
+ il modulo quadro calcolato 
+\end_layout
+
+\begin_layout Plain Layout
+
+end mod_quad_oper;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Dataflow of mod_quad_oper is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   --! Affinchè le stringhe di bit in ingresso vengano trattate come numeri
+ signed, 
+\end_layout
+
+\begin_layout Plain Layout
+
+   --! vengono utilizzati i seguenti segnali ausiliari definiti signed.
+\end_layout
+
+\begin_layout Plain Layout
+
+        signal data_im:  signed(n-1 downto 0);                      
+\end_layout
+
+\begin_layout Plain Layout
+
+        signal data_re:  signed(n-1 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Per garantire il corretto calcolo dell'operazione di addizione di
+ numeri signed,
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! sono definiti i segneìali seguenti.
+\end_layout
+
+\begin_layout Plain Layout
+
+        signal data_im2:  signed(2*n-1 downto 0);   --! Im^2
+\end_layout
+
+\begin_layout Plain Layout
+
+        signal data_re2:  signed(2*n-1 downto 0);   --! Re^2
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Il segnale data_mod, invecec, conterrà il risultato dell'addizione
+ signed
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! tra data_im2 e data_re2
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal data_mod:  signed(2*n-1 downto 0);         --! Im^2 + Re^2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    data_im<=signed(Im);    --! Casting da std_logic_vector a signed
+\end_layout
+
+\begin_layout Plain Layout
+
+    data_re<=signed(Re);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Calcolo del quadrato della parte immaginaria
+\end_layout
+
+\begin_layout Plain Layout
+
+    data_im2<=data_im*data_im;                   --32 bit_signed * 32 bit_signed
+= 64 bit_signed
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Calcolo del quadrato della parte reale
+\end_layout
+
+\begin_layout Plain Layout
+
+    data_re2<=data_re*data_re;                   --32 bit_signed * 32 bit_signed
+= 64 bit_signed
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Somma dei due quadrati per ottenere il modulo del numero.
+\end_layout
+
+\begin_layout Plain Layout
+
+    data_mod<=data_im2+data_re2;                  --64 bit_signed + 64 bit
+ _signed = 65 bit_signed = 64 bit unsigned (poichè il valore è senz'altro
+ positivo) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Il valore calcolato viene portato in uscita a meno dell'ultimo bit
+\end_layout
+
+\begin_layout Plain Layout
+
+    modulo2<=std_logic_vector(data_mod(2*n-1 downto 0));    
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Dataflow;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Square Root
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL, caption="Square Root"]
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/src/AXI4_Stream_Square_Root_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Tale componente, attraverso una FSM, realizza il calcolo della
+ radice
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        quadrata di un numero.
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.NUMERIC_STD.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity AXI4_Stream_Square_Root_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk    : in   STD_LOGIC;                                   
+ --! Segnale di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in   STD_LOGIC;                                   
+ --! Reset sincrono, attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Slave signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tvalid  : in   STD_LOGIC;                      
+ --! Se alto, il tdata in input è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tready   : out  STD_LOGIC;                     
+ --! Se alto, il componente è pronto a ricevere il tdata
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_value_tdata  : in   STD_LOGIC_VECTOR (47 downto 0);  
+ --! Valore di cui si vuole calcolare la radice
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Master signal interface
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_result_tvalid : out STD_LOGIC;                       
+ --! Se alto, il tdata in output è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_result_tready : in STD_LOGIC;                        
+ --! Se alto, il componente a valle è pronto a ricevere il dato
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_result_tdata : out  STD_LOGIC_VECTOR (23 downto 0)); 
+ --! Valore della radice calcolato
+\end_layout
+
+\begin_layout Plain Layout
+
+end AXI4_Stream_Square_Root_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Behavioral of AXI4_Stream_Square_Root_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Segnali ausiliari utili al funzionamento dell'algoritmo
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal op  : unsigned(47 downto 0); --! In questo segnale viene memorizzato
+ inizialmente il valore di cui si vuole calcolare la radice
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal res : unsigned(47 downto 0); --! Qui viene memorizzato il risultato
+ temporaneo dell'operazione
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal one : unsigned(47 downto 0); --! Valore iniziale di confronto
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Deinizione degli stati della FSM
+\end_layout
+
+\begin_layout Plain Layout
+
+    type state is (idle, shift, calc, wait_tready); --! Il tipo stato può
+ assumere i valori idle, shift, calc, wait_tready
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal next_state : state;                      --! Creazione di un
+ segnale next_state di tipo state
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    ROOT_ALG : process
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+         begin
+\end_layout
+
+\begin_layout Plain Layout
+
+         
+\end_layout
+
+\begin_layout Plain Layout
+
+          wait until rising_edge(aclk);
+\end_layout
+
+\begin_layout Plain Layout
+
+          
+\end_layout
+
+\begin_layout Plain Layout
+
+              case next_state is 
+\end_layout
+
+\begin_layout Plain Layout
+
+                
+\end_layout
+
+\begin_layout Plain Layout
+
+                 when idle => 
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if (aresetn = '0') then            --! Se il reset
+ è attivo
+\end_layout
+
+\begin_layout Plain Layout
+
+                        s_axis_value_tready <= '0';     --! il tready deve
+ essere portato a zero
+\end_layout
+
+\begin_layout Plain Layout
+
+                     else
+\end_layout
+
+\begin_layout Plain Layout
+
+                         s_axis_value_tready <= '1';    --! altrimenti è
+ settato a 1
+\end_layout
+
+\begin_layout Plain Layout
+
+                     end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                   
+\end_layout
+
+\begin_layout Plain Layout
+
+                     m_axis_result_tvalid <= '0';       --! Il tvalid del
+ master è posto a zero     
+\end_layout
+
+\begin_layout Plain Layout
+
+              
+\end_layout
+
+\begin_layout Plain Layout
+
+                    --! Inizializzazione segnali ausiliari all'algoritmo
+                    
+\end_layout
+
+\begin_layout Plain Layout
+
+                    one <= x"400000000000";
+\end_layout
+
+\begin_layout Plain Layout
+
+                    op  <= unsigned(s_axis_value_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+                    res <= (others=>'0');   
+\end_layout
+
+\begin_layout Plain Layout
+
+                   
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (s_axis_value_tvalid='1') then   --! se il t valid
+ dello slave è pari ad 1 inizia un nuovo calcolo
+\end_layout
+
+\begin_layout Plain Layout
+
+                       next_state <= shift;             --! e la FSM passa
+ nello stato di SHIFT                       
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+                 when shift =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (aresetn = '0') then             --! Se il reset
+ è attivo
+\end_layout
+
+\begin_layout Plain Layout
+
+                       next_state <= idle;              --! si torna nello
+ stato di idle
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    
+\end_layout
+
+\begin_layout Plain Layout
+
+                    s_axis_value_tready <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (one > op) then
+\end_layout
+
+\begin_layout Plain Layout
+
+                       one <= one/4;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    else
+\end_layout
+
+\begin_layout Plain Layout
+
+                       next_state   <= calc;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+                 when calc =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (aresetn = '0') then             --! Se il reset
+ è attivo
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= idle;             --! si torna nello
+ stato di idle
+\end_layout
+
+\begin_layout Plain Layout
+
+                     end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (one /= 0) then                  
+\end_layout
+
+\begin_layout Plain Layout
+
+                       if (op >= res+one) then         
+\end_layout
+
+\begin_layout Plain Layout
+
+                          op   <= op - (res+one);
+\end_layout
+
+\begin_layout Plain Layout
+
+                          res  <= res/2 + one;
+\end_layout
+
+\begin_layout Plain Layout
+
+                       else
+\end_layout
+
+\begin_layout Plain Layout
+
+                          res  <= res/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+                       end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                       one <= one/4;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    else
+\end_layout
+
+\begin_layout Plain Layout
+
+                       next_state  <= wait_tready;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    
+\end_layout
+
+\begin_layout Plain Layout
+
+                 when wait_tready =>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (aresetn = '0') then             --! Se il reset
+ è attivo
+\end_layout
+
+\begin_layout Plain Layout
+
+                        next_state <= idle;             --! si torna nello
+ stato di idle
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+                    
+\end_layout
+
+\begin_layout Plain Layout
+
+                    m_axis_result_tvalid <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+               
+\end_layout
+
+\begin_layout Plain Layout
+
+                    --! Conserva il dato calcolato finchè non arriva un
+ tready sul master     
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (m_axis_result_tready='1') then 
+\end_layout
+
+\begin_layout Plain Layout
+
+                       next_state <= idle; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end if;
+\end_layout
+
+\begin_layout Plain Layout
+
+              end case;
+\end_layout
+
+\begin_layout Plain Layout
+
+       end process;
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   --! Salvataggio del risultato sui segnali di uscita
+\end_layout
+
+\begin_layout Plain Layout
+
+   m_axis_result_tdata <= std_logic_vector(res(m_axis_result_tdata'range));
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+end Behavioral;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Testbench
+\end_layout
+
+\begin_layout Standard
+Per verificare il funzionamento, viene eseguito un semplice testbench, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Testbench-1-1"
+
+\end_inset
+
+, fornendo in input al Task una coppia di dati generati in MATLAB.
+ Si può notare come il risultato finale viene restituito in uscita dopo
+ 144 cicli di clock, impostando idealmente un clock in ingresso a 100 Mhz.
+ In questa implementazione, l'uscita r è espressa in una forma fixed point
+ unsigned <24,11>.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/tb_t4_v2.jpg
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Testbench-1-1"
+
+\end_inset
+
+Testbench
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Analisi soluzione
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda l'area occupata dal componente complessivo, viene fornita
+ la seguente tabella che riassume l'occupazione dovuta ai singoli IP core
+ dispiegati, nonché quella relativa all'intero Task.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Componente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Absolute Square
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+165
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+66
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Divider generator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2036
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4474
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Square Root
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+233
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+124
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Totale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2600(15%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4730(13%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16(20%)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:AreaSol2-Occupazione-d'area-2"
+
+\end_inset
+
+Occupazione d'area post-sintesi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si può notare che, rispetto alla versione precedente, c'è un netto risparmio
+ delle risorse disponibili sulla board.
+ 
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda, invece, la frequenza di lavoro del circuito, utilizzando
+ lo stesso metodo descritto per la versione precedente, fig.
+ , si trova che, in questo caso, il componente può lavorare ad una frequenza
+ di 
+\begin_inset Formula $80,901Mhz$
+\end_inset
+
+, dovuta al componente Absolute Square.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Freq_max_dsp.png
+	lyxscale 60
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:freq dsp"
+
+\end_inset
+
+Most negative slack
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Vantaggi e svantaggi
+\end_layout
+
+\begin_layout Standard
+In questa versione è facile notare come vengono superate le criticità incontrate
+ nella precedente soluzione.
+ In particolare, viene migliorato il consumo di risorse disponibili sulla
+ board, l'intero componente è compatibile con AXI4 Stream, il tutto al prezzo
+ di calcolare il risultato finale in 144 cicli di clock, rispetto ai 137
+ della versione precedente.
+\end_layout
+
+\begin_layout Standard
+Un ulteriore svantaggio riscontrato nella soluzione proposta riguarda l'adattame
+nto del segnale di uscita.
+ Far restituire al divisore un numero di cifre decimali pari a 40, risulta
+ essere uno spreco significativo di risorse, in quanto successivamente,
+ dopo l'operazione di radice i 20 bit decimali vengono comunque troncati,
+ per diventare 11.
+ A questo punto, nella soluzione successiva, si pensa un modo per superare
+ tale criticità.
+\end_layout
+
+\begin_layout Section
+Task 4 v2.1
+\end_layout
+
+\begin_layout Standard
+Tale soluzione, come precisato sopra, si propone di ridurre sia il consumo
+ di area sia il numero di cicli di clock necessari ad ottenere il risultato
+ finale.
+ In particolare, si modifica la dimensione della parte frazionaria in uscita
+ al divisore.
+ In questo modo, il divisore occupa meno area e impiega meno cicli di clock
+ per calcolare il quoziente.
+\end_layout
+
+\begin_layout Subsection
+Design
+\end_layout
+
+\begin_layout Standard
+La fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block-Diagram-v1-1-1"
+
+\end_inset
+
+ mostra il block design.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/T4_2.1.PNG
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block-Diagram-v1-1-1"
+
+\end_inset
+
+Block Diagram relativo ad una terza soluzione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Codice
+\end_layout
+
+\begin_layout Standard
+Di seguito si riporta l'unico codice variato rispetto alla soluzione precedente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting} [language=VHDL,caption="Task4 v2.1"]
+\end_layout
+
+\begin_layout Plain Layout
+
+-------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_1/src/Task4_m.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V2.1
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	18-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Questo componente include tutte le funzionalità che deve eseguire
+ il
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        Task 4.
+ In particolare, in ingresso al componente vengono forniti
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        2 segnali complessi espressi su 64 bit (32 Im, 32 Re); in uscita,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        invece, è reso disponibile un segnale contenente la radice del
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        rapporto del modulo quadro dei due segnali di ingresso.
+ Tale segnale
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        è espresso su 24 bit, di cui 13 sono la parte intera, 11 quella
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        decimale.
+ Tutto il componente è realizzato in modo tale da essere 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        compatibile con interfaccia AXI4 Stream.
+\end_layout
+
+\begin_layout Plain Layout
+
+-------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port ( aclk : in STD_LOGIC;                                        
+ --! Segnale di temporizzazione
+\end_layout
+
+\begin_layout Plain Layout
+
+           aresetn : in STD_LOGIC;                                     
+ --! Reset sincrono, attivo basso
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tvalid :  in STD_LOGIC;                    
+ --! Se alto, il dato sum_early è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tready :  out STD_LOGIC;                   
+ --! Se alto il componente è pronto a ricevere sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_early_tdata : in STD_LOGIC_VECTOR (63 downto 0); 
+ --! Segnale di input rappresentante sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tvalid :  in STD_LOGIC;                     
+ --! Se alto, il dato sum_late è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tready :  out STD_LOGIC;                    
+ --! Se alto il componente è pronto a ricevere sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           s_axis_sum_late_tdata : in STD_LOGIC_VECTOR (63 downto 0);  
+ --! Segnale di input rappresentante sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+           -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tvalid: out std_logic;                             
+ --! Se alto, il dato r in output è valido
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tready: in std_logic;                              
+ --! Se alto, il componente a valle è pronto a ricevere il dato r
+\end_layout
+
+\begin_layout Plain Layout
+
+           m_axis_r_tdata : out STD_LOGIC_VECTOR (23 downto 0)         
+ --! Segnale di output rappresentante r
+\end_layout
+
+\begin_layout Plain Layout
+
+           );
+\end_layout
+
+\begin_layout Plain Layout
+
+end Task4_m;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Structural of Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+-----------------------Absolute Square Component------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Absolute_Square_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Slave del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               -- Interfaccia Master del componente
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata : out STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid : out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready : in STD_LOGIC);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+---------------------------Divisor Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Divider_m IS
+\end_layout
+
+\begin_layout Plain Layout
+
+      Port (
+\end_layout
+
+\begin_layout Plain Layout
+
+        aclk : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        aresetn : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_divisor_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tvalid : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tready : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        s_axis_dividend_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tvalid : OUT STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tready : IN STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        m_axis_dout_tdata : OUT STD_LOGIC_VECTOR(87 DOWNTO 0)   --! rispetto
+ alla v2.0 viene richiesta una parte frazionaria di 22 bit, al posto di 40
+\end_layout
+
+\begin_layout Plain Layout
+
+      );
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------Square Root Component-------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component AXI4_Stream_Square_Root_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aclk    : in   STD_LOGIC;                               
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn : in   STD_LOGIC;                              
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid  : in   STD_LOGIC;                  
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready   : out  STD_LOGIC;                 
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata  : in   STD_LOGIC_VECTOR (47 downto 0);
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tvalid : out STD_LOGIC;                   
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tready : in STD_LOGIC;                    
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_result_tdata : out  STD_LOGIC_VECTOR (23 downto 0));
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per i due componenti che realizzano il modulo quadro
+ di Sum_Early e Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal late2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2buffer: std_logic_vector(63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal early2tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnali ausiliari per il componente che realizza la divisione tra il
+ modulo di Sum_Early e il modulo di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tdata : std_logic_vector(87 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+signal quozient_tready : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Segnale ausiliare per gestire il dato in uscita da rappresentare su
+ 24 bit,
+\end_layout
+
+\begin_layout Plain Layout
+
+--! di cui 13 costituiscono la parte intera e 11 quella decimale.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Il valore è rapppresentato come signed.
+\end_layout
+
+\begin_layout Plain Layout
+
+signal root_value : std_logic_vector (23 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_EARLY:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+               aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tdata => s_axis_sum_early_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tvalid => s_axis_sum_early_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_value_tready => s_axis_sum_early_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_abssqr_tready => early2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+               
+\end_layout
+
+\begin_layout Plain Layout
+
+ABS_SQR_LATE:  AXI4_Stream_Absolute_Square_m
+\end_layout
+
+\begin_layout Plain Layout
+
+       PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => s_axis_sum_late_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => s_axis_sum_late_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => s_axis_sum_late_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_abssqr_tready => late2tready);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+DIVIDER: AXI4_Stream_Divider_m
+\end_layout
+
+\begin_layout Plain Layout
+
+          PORT MAP(
+\end_layout
+
+\begin_layout Plain Layout
+
+                aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+                aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tvalid => late2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tready => late2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_divisor_tdata => late2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tvalid => early2tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tready => early2tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                s_axis_dividend_tdata => early2buffer,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+                m_axis_dout_tdata => quozient_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+                
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+SQUARE_ROOT: AXI4_Stream_Square_Root_m
+\end_layout
+
+\begin_layout Plain Layout
+
+        PORT MAP ( 
+\end_layout
+
+\begin_layout Plain Layout
+
+              aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+              aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tvalid => quozient_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tready => quozient_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              s_axis_value_tdata => quozient_tdata(47 downto 0),     
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tvalid => m_axis_r_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tready => m_axis_r_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+              m_axis_result_tdata => root_value);
+\end_layout
+
+\begin_layout Plain Layout
+
+              
+\end_layout
+
+\begin_layout Plain Layout
+
+m_axis_r_tdata <= '0' & root_value(22 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end Structural;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Testing
+\end_layout
+
+\begin_layout Standard
+Per verificare il funzionamento, viene eseguito, in un primo momento, un
+ semplice testbench, fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Testbench-1-1-1"
+
+\end_inset
+
+, fornendo in input al Task una coppia di dati generati in MATLAB.
+ Si può notare come il risultato finale viene restituito in uscita dopo
+ 128 cicli di clock, impostando idealmente un clock in ingresso a 100 Mhz.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/tb_t4_v2_1.jpg
+	lyxscale 60
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Testbench-1-1-1"
+
+\end_inset
+
+Testbench
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Successivamente, viene eseguito un testbench che, presi in ingresso dei
+ dati generati dallo script Matlab T4_data_generator.m, fornito dall'ing.
+ Ricci, restituisce i risultati calcolati dal componente e li stampa nel
+ file outputR_Vivado.txt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=VHDL, caption="Task4 automatic tb.vhd"]
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @file    	Task4_v2_0/tb/Task4_automatic_tb.vhd
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @authors	
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Colella Gianni      <gian.colella@studenti.unina.it>      
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Guida Ciro          <ciro.guida4@studenti.unina.it>       
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!             Lombardi Daniele    <daniele.lombardi@studenti.unina.it>  
+  <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @version 	V1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @date    	17-July-2017
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @copyright
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Copyright (C) 2017      
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Colella Gianni      <gian.colella@studenti.unina.it>        <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Guida Ciro          <ciro.guida4@studenti.unina.it>         <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Lombardi Daniele    <daniele.lombardi@studenti.unina.it>    <br>
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+ It is realized from Group IV of Embedded System 
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Class, University of Naples "Federico II", in the academic year 2016/17.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  This file is part of Task4.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is free software: you can redistribute it and/or modify
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  it under the terms of the GNU Affero General Public License as published
+ by
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  the Free Software Foundation, either version 3 of the License, or
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  (at your option) any later version.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  Task4 is distributed in the hope that it will be useful,
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  GNU Affero General Public License for more details.
+\end_layout
+
+\begin_layout Plain Layout
+
+--!
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  You should have received a copy of the GNU Affero General Public License
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  along with Linux Driver: Examples.
+ If not, see
+\end_layout
+
+\begin_layout Plain Layout
+
+--!  <https://www.gnu.org/licenses/agpl-3.0.html>.
+\end_layout
+
+\begin_layout Plain Layout
+
+--! @brief Con questo file si effettua un test bench su un numero significativo
+ di
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        elementi, pari a 1000.
+ I dati in input al componente Task 4 vengono letti
+\end_layout
+
+\begin_layout Plain Layout
+
+--!        da 2 file generati da uno script Matlab (inputEarly.txt e inputLate.txt
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+--------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+library IEEE;
+\end_layout
+
+\begin_layout Plain Layout
+
+use IEEE.STD_LOGIC_1164.ALL;
+\end_layout
+
+\begin_layout Plain Layout
+
+use std.textio.all;             --! Package necessario per la lettura e scrittura
+ di file
+\end_layout
+
+\begin_layout Plain Layout
+
+use ieee.std_logic_textio.all; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+entity Task4_automatic_tb is
+\end_layout
+
+\begin_layout Plain Layout
+
+--  Port ( );
+\end_layout
+
+\begin_layout Plain Layout
+
+end Task4_automatic_tb;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+architecture Behavioral of Task4_automatic_tb is
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+----------------------------Task 4 Component----------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Plain Layout
+
+    component Task4_m is
+\end_layout
+
+\begin_layout Plain Layout
+
+        Port ( aclk : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               aresetn : in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_early_tvalid :  in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_early_tready :  out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_early_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_late_tvalid :  in STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_late_tready :  out STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+               s_axis_sum_late_tdata : in STD_LOGIC_VECTOR (63 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_r_tvalid : out std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_r_tready : in std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+               m_axis_r_tdata : out STD_LOGIC_VECTOR (23 downto 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+               );
+\end_layout
+
+\begin_layout Plain Layout
+
+    end component;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal aclk : STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal aresetn : STD_LOGIC := '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_early_tvalid : STD_LOGIC:='0';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_early_tready : STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_early_tdata : STD_LOGIC_VECTOR (63 downto 0) := (others
+ => '0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_late_tvalid : STD_LOGIC:='0';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_late_tready : STD_LOGIC;
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal s_axis_sum_late_tdata : STD_LOGIC_VECTOR (63 downto 0)  := (others
+ => '0');
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal m_axis_r_tvalid : std_logic;
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal m_axis_r_tready : std_logic := '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+    signal m_axis_r_tdata : STD_LOGIC_VECTOR (23 downto 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    --! Vengono definiti i nomi dei file da utilizzare durante il test bench
+\end_layout
+
+\begin_layout Plain Layout
+
+	file data_early : text;        --! Questo è il file in cui sono presenti
+ i dati di Sum_Early
+\end_layout
+
+\begin_layout Plain Layout
+
+	file data_late : text;         --! Questo è il file in cui sono presenti
+ i dati di Sum_Late
+\end_layout
+
+\begin_layout Plain Layout
+
+	file data_r : text;            --! Questo è il file in cui saranno salvati
+ i risultati di R
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+constant clock_period: time := 10 ns;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+uut: Task4_m
+\end_layout
+
+\begin_layout Plain Layout
+
+    Port map( 
+\end_layout
+
+\begin_layout Plain Layout
+
+         aclk => aclk,
+\end_layout
+
+\begin_layout Plain Layout
+
+         aresetn => aresetn,
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_early_tvalid => s_axis_sum_early_tvalid, 
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_early_tready  => s_axis_sum_early_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_early_tdata  => s_axis_sum_early_tdata, 
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_late_tvalid  => s_axis_sum_late_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_late_tready => s_axis_sum_late_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+         s_axis_sum_late_tdata  => s_axis_sum_late_tdata,
+\end_layout
+
+\begin_layout Plain Layout
+
+         m_axis_r_tvalid  => m_axis_r_tvalid,
+\end_layout
+
+\begin_layout Plain Layout
+
+         m_axis_r_tready  => m_axis_r_tready,
+\end_layout
+
+\begin_layout Plain Layout
+
+         m_axis_r_tdata  => m_axis_r_tdata);
+\end_layout
+
+\begin_layout Plain Layout
+
+         
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Clock process definitions
+\end_layout
+
+\begin_layout Plain Layout
+
+clock_process :process
+\end_layout
+
+\begin_layout Plain Layout
+
+    begin
+\end_layout
+
+\begin_layout Plain Layout
+
+     aclk <= '0';
+\end_layout
+
+\begin_layout Plain Layout
+
+     wait for clock_period/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+     aclk <= '1';
+\end_layout
+
+\begin_layout Plain Layout
+
+     wait for clock_period/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+end process;
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+--! Stimulus process
+\end_layout
+
+\begin_layout Plain Layout
+
+	stim_proc: process
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\end_layout
+
+\begin_layout Plain Layout
+
+		--! Variabili utilizzate per la lettura e scrittura dei file 
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable early_file_line : line;      --! Variabile associata alla linea
+ letta dal file data_early
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable late_file_line : line;       --! Variabile associata alla linea
+ letta dal file data_late
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable r_file_line : line;          --! Variabile associata alla linea
+ scritta nel file data_r
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable read_sum_early : std_logic_vector (63 downto 0) := (others=>'0');
+   --!Variabile associata al valore letto di sum_early
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable read_sum_late : std_logic_vector (63 downto 0) := (others=>'0');
+    --!Variabile associata al valore letto di sum_late
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\end_layout
+
+\begin_layout Plain Layout
+
+		variable write_r : std_logic_vector (23 downto 0) := (others => '0');
+        --!Variabile associata al valore scritto di r 
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+		begin        
+\end_layout
+
+\begin_layout Plain Layout
+
+		   -- hold reset state for 100 ns.
+\end_layout
+
+\begin_layout Plain Layout
+
+		   wait for clock_period*10;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+            
+\end_layout
+
+\begin_layout Plain Layout
+
+			file_open(data_early, "/home/daniele/Scrivania/Task4/testing2.0/inputEarly.txt"
+,  read_mode);   --! apertura del file inputEarly
+\end_layout
+
+\begin_layout Plain Layout
+
+			file_open(data_late, "/home/daniele/Scrivania/Task4/testing2.0/inputLate.txt",
+ read_mode);      --! apertura del file inputLate
+\end_layout
+
+\begin_layout Plain Layout
+
+			file_open(data_r, "/home/daniele/Scrivania/Task4/testing2.0/outputR_Vivado.txt"
+, write_mode);   --! apertura del file outputR
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+			while not endfile(data_early) loop       --! Il ciclo serve per leggere
+ tutti i dati contenuti nei file di input
+\end_layout
+
+\begin_layout Plain Layout
+
+			                                         --! poichè la loro dimensione
+ è la stessa, la condizione di terminazione
+\end_layout
+
+\begin_layout Plain Layout
+
+			                                         --! del ciclo può essere fatta
+ indifferentemente usando la funzione 
+\end_layout
+
+\begin_layout Plain Layout
+
+			                                         --! endfile(   ) su uno dei
+ due file.
+\end_layout
+
+\begin_layout Plain Layout
+
+				readline(data_early,early_file_line);
+\end_layout
+
+\begin_layout Plain Layout
+
+				read(early_file_line,read_sum_early);
+\end_layout
+
+\begin_layout Plain Layout
+
+				s_axis_sum_early_tdata<=read_sum_early;
+\end_layout
+
+\begin_layout Plain Layout
+
+				
+\end_layout
+
+\begin_layout Plain Layout
+
+				readline(data_late,late_file_line);
+\end_layout
+
+\begin_layout Plain Layout
+
+				read(late_file_line,read_sum_late);
+\end_layout
+
+\begin_layout Plain Layout
+
+				s_axis_sum_late_tdata<=read_sum_late;
+\end_layout
+
+\begin_layout Plain Layout
+
+				
+\end_layout
+
+\begin_layout Plain Layout
+
+				s_axis_sum_early_tvalid <='1';       --! Senza perdere di generalità
+ si suppone che i segnali tvalid dei dati 
+\end_layout
+
+\begin_layout Plain Layout
+
+			    s_axis_sum_late_tvalid <='1';        --! in input arrivino contemporaneam
+ente
+\end_layout
+
+\begin_layout Plain Layout
+
+			    
+\end_layout
+
+\begin_layout Plain Layout
+
+				wait for clock_period;               --! Per simulare il comportamento
+ del protocollo AXI4 Stream
+\end_layout
+
+\begin_layout Plain Layout
+
+			      	s_axis_sum_early_tvalid <='0';   --! dopo un colpo di clock i
+ segnali tvalid sono messi a zero
+\end_layout
+
+\begin_layout Plain Layout
+
+			      	s_axis_sum_late_tvalid <='0';
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\end_layout
+
+\begin_layout Plain Layout
+
+				wait until m_axis_r_tvalid = '1';    --! Qui il test deve arrestarsi
+ in attesa che il segnale tvalid sull'interfaccia
+\end_layout
+
+\begin_layout Plain Layout
+
+			                                         --! AXI4 Stream sia alto.
+ Ciò sta a significare che il componente ha finito di
+\end_layout
+
+\begin_layout Plain Layout
+
+				                                     --! processare i segnali che ha
+ ricevuto in ingresso
+\end_layout
+
+\begin_layout Plain Layout
+
+				write(r_file_line, m_axis_r_tdata, right, 24); 
+\end_layout
+
+\begin_layout Plain Layout
+
+				writeline(data_r, r_file_line);
+\end_layout
+
+\begin_layout Plain Layout
+
+	    
+\end_layout
+
+\begin_layout Plain Layout
+
+		     	end loop;
+\end_layout
+
+\begin_layout Plain Layout
+
+		     
+\end_layout
+
+\begin_layout Plain Layout
+
+		    --! Chiusura dei file precedentemente aperti  
+\end_layout
+
+\begin_layout Plain Layout
+
+		 	file_close(data_early);
+\end_layout
+
+\begin_layout Plain Layout
+
+			file_close(data_late);
+\end_layout
+
+\begin_layout Plain Layout
+
+			file_close(data_r);
+\end_layout
+
+\begin_layout Plain Layout
+
+		   wait; 
+\end_layout
+
+\begin_layout Plain Layout
+
+		end process;        
+\end_layout
+
+\begin_layout Plain Layout
+
+               
+\end_layout
+
+\begin_layout Plain Layout
+
+end Behavioral;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ottenuto il file 
+\shape italic
+outputR_Vivado.txt
+\shape default
+, viene eseguito il seguente script in Matlab per poter calcolare errore
+ relativo e assoluto tra i valori generati in Matlab e quelli calcolati
+ dal componente realizzato.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=MATLAB, caption="errors evaluation.m"]
+\end_layout
+
+\begin_layout Plain Layout
+
+%% CALCOLO ERRORI
+\end_layout
+
+\begin_layout Plain Layout
+
+% Con questo piccolo script in codice MATLAB si vuole calcolare l'errore
+\end_layout
+
+\begin_layout Plain Layout
+
+% relativo e l'errore assoluto dei valori di output del TASK 4.
+\end_layout
+
+\begin_layout Plain Layout
+
+% Tali valutazioni sono effettuate confrontando i
+\end_layout
+
+\begin_layout Plain Layout
+
+% valori di R generati dal codice MATLAB e forniti al gruppo IV da chi ha
+\end_layout
+
+\begin_layout Plain Layout
+
+% commissionato questo progetto, con i valori ottenuti dall'IP%core custom,
+\end_layout
+
+\begin_layout Plain Layout
+
+% sotto ambiente Vivado, realizzato ad hoc per rispettare le specifiche
+ di
+\end_layout
+
+\begin_layout Plain Layout
+
+% progetto.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+q=quantizer([24 13]);
+\end_layout
+
+\begin_layout Plain Layout
+
+[bin_r_mat,dec_r_mat]=range(q);
+\end_layout
+
+\begin_layout Plain Layout
+
+[bin_r_viv,dec_r_viv]=range(q);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+format longE;
+\end_layout
+
+\begin_layout Plain Layout
+
+r_file_matlab = 'outputR_Matlab.txt';
+\end_layout
+
+\begin_layout Plain Layout
+
+r_file_vivado = 'outputR_Vivado.txt';
+\end_layout
+
+\begin_layout Plain Layout
+
+error_abs_file = 'error_abs.txt';
+\end_layout
+
+\begin_layout Plain Layout
+
+error_rel_file = 'error_rel.txt';
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%leggi e carica i dati binari dai file
+\end_layout
+
+\begin_layout Plain Layout
+
+%trasformo i dati in decimale cosi' da poter fare un confronto e valutare
+ l'errore relativo e assoluto
+\end_layout
+
+\begin_layout Plain Layout
+
+r_mat=textread(r_file_matlab,'%s');
+\end_layout
+
+\begin_layout Plain Layout
+
+bin_r_mat= r_mat(1:1:end);
+\end_layout
+
+\begin_layout Plain Layout
+
+dec_r_mat=bin2num(q,bin_r_mat);%r in decimale signed su 13 bit intero e
+ 11 parte decimale
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+r_viv=textread(r_file_matlab,'%s');
+\end_layout
+
+\begin_layout Plain Layout
+
+bin_r_viv= r_viv(1:1:end);
+\end_layout
+
+\begin_layout Plain Layout
+
+dec_r_viv=bin2num(q,bin_r_viv);%r in decimale signed su 13 bit intero e
+ 11 parte decimale
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+dec_r_viv=cell2mat(dec_r_viv);
+\end_layout
+
+\begin_layout Plain Layout
+
+dec_r_mat=cell2mat(dec_r_mat);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+error_abs_dec= abs(dec_r_viv % dec_r_mat);
+\end_layout
+
+\begin_layout Plain Layout
+
+dlmwrite(error_abs_file,error_abs_dec,' ');
+\end_layout
+
+\begin_layout Plain Layout
+
+error_rel_dec= abs(dec_r_viv%dec_r_mat)./dec_r_mat;
+\end_layout
+
+\begin_layout Plain Layout
+
+dlmwrite(error_rel_file,error_abs_dec,' ');
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Il testing effettuato su un numero di 1000 campioni ha restituito errore
+ relativo e assoluto pari a 0 per tutti i valori di r.
+ Dunque, avendo una rappresentazione di r su 24 bit, di cui 11 decimali,
+ si può commettere un errore minore di 
+\begin_inset Formula $2^{-12}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Analisi soluzione
+\end_layout
+
+\begin_layout Standard
+Di seguito si riportano le occupazioni d'area di ogni singolo modulo e del
+ componente totale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Componente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+LUT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Slice Register
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DSP48
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Absolute Square
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+165
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+66
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Divider generator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1736
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3806
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Square Root
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+233
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+124
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Totale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2300(13%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4062(12%)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16(20%)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:AreaSol2-Occupazione-d'area-2-1"
+
+\end_inset
+
+Occupazione d'area post-sintesi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si può notare che, rispetto alla versione precedente, c'è un leggero risparmio
+ delle risorse.
+\end_layout
+
+\begin_layout Standard
+La frequenza di lavoro è confermata a 
+\begin_inset Formula $80,901Mhz$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
+Conclusioni
+\end_layout
+
+\begin_layout Standard
+In conclusione, dai dati proposti in precedenza emerge che la soluzione
+ migliore realizzata è l'ultima analizzata.
+ Infatti, si ha il massimo risparmio di area tra quelle proposte, come anche
+ il numero di cicli di clock necessari al calcolo del risultato.
+\end_layout
+
+\begin_layout Standard
+I test effettuati dimostrano che il componente è 
 \end_layout
 
 \end_body
