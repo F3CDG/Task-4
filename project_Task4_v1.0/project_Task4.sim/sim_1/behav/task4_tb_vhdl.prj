@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/Square/sim/Square.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/c_addsub_0/sim/c_addsub_0.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/SQRT/sim/SQRT.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/DIVISORE/sim/DIVISORE.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/modulo_quadro.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/Task4.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sim_1/new/task4_tb.vhd"
+
+# Do not sort compile order
+nosort

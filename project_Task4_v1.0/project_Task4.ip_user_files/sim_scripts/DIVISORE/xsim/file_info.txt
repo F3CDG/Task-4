@@ -1,0 +1,1 @@
+DIVISORE.vhd,vhdl,xil_defaultlib,../../../../project_Task4.srcs/sources_1/ip/DIVISORE/sim/DIVISORE.vhd,
