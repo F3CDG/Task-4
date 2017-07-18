@@ -1,0 +1,23 @@
+awk: symbol lookup error: awk: undefined symbol: mpfr_z_sub
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/sim/AXI4_Stream_Divider_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity AXI4_Stream_Divider_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/demo_tb/tb_AXI4_Stream_Divider_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity tb_AXI4_Stream_Divider_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity AXI4_Stream_Absolute_Square_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity abs_sqr_control_unit_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity abs_sqr_operative_part_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity register_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity mod_quad_oper
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity AXI4_Stream_Square_Root_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/Task4_m.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Task4_m
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sim_1/new/Task4_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Task4_tb
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sim_1/new/Task4_automatic_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Task4_automatic_tb

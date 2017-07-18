@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="SQRT_synth_1" LaunchPart="xc7z010clg400-1" LaunchTime="1500236322">
-  <File Type="RDS-PROPCONSTRS" Name="SQRT_drc_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="SQRT_timing_summary_synth.pb"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="SQRT_timing_summary_synth.rpt"/>
   <File Type="PA-TCL" Name="SQRT.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="SQRT_drc_synth.rpt"/>
   <File Type="RDS-RDS" Name="SQRT.vds"/>
   <File Type="RDS-UTIL" Name="SQRT_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="SQRT_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="SQRT.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="SQRT_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="SQRT_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/SQRT">
     <File Path="$PSRCDIR/sources_1/ip/SQRT/SQRT.xci">
       <FileInfo>

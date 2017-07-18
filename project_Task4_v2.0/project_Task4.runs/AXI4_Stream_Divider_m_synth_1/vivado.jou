@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Sun Jul 16 21:14:44 2017
+# Process ID: 3010
+# Current directory: /home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/AXI4_Stream_Divider_m_synth_1
+# Command line: vivado -log AXI4_Stream_Divider_m.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source AXI4_Stream_Divider_m.tcl
+# Log file: /home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/AXI4_Stream_Divider_m_synth_1/AXI4_Stream_Divider_m.vds
+# Journal file: /home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/AXI4_Stream_Divider_m_synth_1/vivado.jou
+#-----------------------------------------------------------
+source AXI4_Stream_Divider_m.tcl -notrace

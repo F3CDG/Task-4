@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="SQRT_synth_1" LaunchDir="/home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/SQRT_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="DIVISORE_synth_1" LaunchDir="/home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/DIVISORE_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="Square_synth_1" LaunchDir="/home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/Square_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="c_addsub_0_synth_1" LaunchDir="/home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/c_addsub_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="synth_1" LaunchDir="/home/daniele/Sistemi_Embedded/Final_project/versione 3 - sqrt daniele/project_Task4/project_Task4.runs/synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado">
+		<Parent Id="SQRT_synth_1"/>
+		<Parent Id="DIVISORE_synth_1"/>
+		<Parent Id="Square_synth_1"/>
+		<Parent Id="c_addsub_0_synth_1"/>
+	</Run>
+</Runs>
+

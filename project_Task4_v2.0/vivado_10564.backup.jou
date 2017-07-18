@@ -1,0 +1,35 @@
+#-----------------------------------------------------------
+# Vivado v2016.3 (64-bit)
+# SW Build 1682563 on Mon Oct 10 19:07:27 MDT 2016
+# IP Build 1681267 on Mon Oct 10 21:28:31 MDT 2016
+# Start of session at: Sun Jul 16 10:23:30 2017
+# Process ID: 10564
+# Current directory: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent6192 C:\Users\giann\Desktop\PROGETTO FINALE\versione 2 - sqrt daniele\project_Task4\project_Task4.xpr
+# Log file: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4/vivado.log
+# Journal file: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4/project_Task4.xpr}
+import_files -norecurse C:/Users/giann/Desktop/root_square_seq_m.vhd
+launch_simulation
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+set_property is_enabled false [get_files  {{C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4/project_Task4.srcs/sim_1/new/task4_tb.vhd}}]
+set_property source_mgmt_mode DisplayOnly [current_project]
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+open_run synth_1 -name synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+refresh_design
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+close_design

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Task 4:  File sorgente Task4_v2_0/src/register_m.vhd</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="LogoGruppoIV.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Task 4
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generato da Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Cerca');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Cerca');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_0ad8d4df640a76ccb805acc591eea1f3.html">Task4_v2_0</a></li><li class="navelem"><a class="el" href="dir_34eeff59a5208f901694d0e208a9fad8.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">register_m.vhd</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="register__m_8vhd.html">Vai alla documentazione di questo file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">----------------------------------------------------------------------------------------------</span></div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">----------------------------------------------------------------------------------------------</span></div><div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classregister__m.html#ae4f03c286607f3181e16b9aa12d0c6d4">   36</a></span>&#160;<span class="vhdlkeyword">library </span><span class="keywordflow">IEEE</span>;</div><div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classregister__m.html#aa4b2b25246a821511120e3149b003563">   37</a></span>&#160;<span class="vhdlkeyword">use </span><a class="code" href="classmod__quad__oper.html#ae4f03c286607f3181e16b9aa12d0c6d4">IEEE</a>.STD_LOGIC_1164.<span class="keywordflow">ALL</span>;</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classregister__m.html">   39</a></span>&#160;<span class="keywordflow">entity </span><a class="code" href="classregister__m.html">register_m</a> <span class="keywordflow">is</span></div><div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classregister__m.html#a26e641c17a5a85571504f47a7c3490d0">   40</a></span>&#160;    <span class="keywordflow">generic</span><span class="vhdlchar">(</span><span class="vhdlchar"><a class="code" href="classregister__m.html#a26e641c17a5a85571504f47a7c3490d0">N</a></span> <span class="vhdlchar">:</span> <span class="comment">natural</span><span class="vhdlchar">:=</span><span class="vhdllogic"></span><span class="vhdllogic">32</span><span class="vhdlchar">)</span>;</div><div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classregister__m.html#a965125180a631cab2d68214e09827909">   41</a></span>&#160;    <span class="keywordflow">Port</span> <span class="vhdlchar">(</span> <span class="vhdlchar"><a class="code" href="classregister__m.html#a965125180a631cab2d68214e09827909">data_in</a></span> <span class="vhdlchar">:</span> <span class="keywordflow">in</span> <span class="comment">STD_LOGIC_VECTOR</span> <span class="vhdlchar">(</span><span class="vhdlchar"><a class="code" href="classregister__m.html#a26e641c17a5a85571504f47a7c3490d0">N</a></span><span class="vhdlchar">-</span><span class="vhdllogic"></span><span class="vhdllogic">1</span> <span class="keywordflow">downto</span> <span class="vhdllogic"></span><span class="vhdllogic">0</span><span class="vhdlchar">)</span>;</div><div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classregister__m.html#a94e616072f03929fe6587e190d23f869">   42</a></span>&#160;           enable : <span class="keywordflow">in</span> <span class="comment">STD_LOGIC</span>;                           --! Segnale di abilitazione utilizzato per la scrittura nel registro</div><div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classregister__m.html#a8881084de0fcf748e41bd0fd1028445e">   43</a></span>&#160;           <span class="vhdlchar"><a class="code" href="classregister__m.html#a8881084de0fcf748e41bd0fd1028445e">reset_n</a></span> <span class="vhdlchar">:</span> <span class="keywordflow">in</span> <span class="comment">STD_LOGIC</span>;</div><div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classregister__m.html#a4868b3bbbab61dbf011713b35adc7a76">   44</a></span>&#160;           <span class="vhdlchar"><a class="code" href="classregister__m.html#a4868b3bbbab61dbf011713b35adc7a76">data_out</a></span> <span class="vhdlchar">:</span> <span class="keywordflow">out</span> <span class="comment">STD_LOGIC_VECTOR</span> <span class="vhdlchar">(</span><span class="vhdlchar"><a class="code" href="classregister__m.html#a26e641c17a5a85571504f47a7c3490d0">N</a></span><span class="vhdlchar">-</span><span class="vhdllogic"></span><span class="vhdllogic">1</span> <span class="keywordflow">downto</span> <span class="vhdllogic"></span><span class="vhdllogic">0</span><span class="vhdlchar">)</span>;</div><div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classregister__m.html#a94e37f4a694983c46ed8002169815d5c">   45</a></span>&#160;           <span class="vhdlchar"><a class="code" href="classregister__m.html#a94e37f4a694983c46ed8002169815d5c">clock</a></span> <span class="vhdlchar">:</span> <span class="keywordflow">in</span> <span class="comment">STD_LOGIC</span><span class="vhdlchar">)</span>;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordflow">end</span> <span class="vhdlchar">register_m</span>;</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classregister__m_1_1_behavioral.html">   48</a></span>&#160;<span class="keywordflow">architecture</span> Behavioral <span class="keywordflow">of</span> <a class="code" href="classregister__m.html">register_m</a> is</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="vhdlkeyword">begin</span></div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div><div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classregister__m_1_1_behavioral.html#af96bdf30b107f88dbe4b460c1277f762">   52</a></span>&#160;    <span class="keywordflow">process</span>(<a class="code" href="classregister__m.html#a94e37f4a694983c46ed8002169815d5c">clock</a>)</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="vhdlkeyword">        begin</span></div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">if</span> <span class="vhdlchar">rising_edge</span><span class="vhdlchar">(</span><span class="vhdlchar"><a class="code" href="classregister__m.html#a94e37f4a694983c46ed8002169815d5c">clock</a></span><span class="vhdlchar">)</span> <span class="keywordflow">then</span></div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                <span class="keywordflow">if</span> <span class="vhdlchar"><a class="code" href="classregister__m.html#a8881084de0fcf748e41bd0fd1028445e">reset_n</a></span><span class="vhdlchar">=</span><span class="vhdlchar">&#39;</span><span class="vhdllogic"></span><span class="vhdllogic">0</span><span class="vhdlchar">&#39;</span> <span class="keywordflow">then</span></div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                   <span class="vhdlchar"><a class="code" href="classregister__m.html#a4868b3bbbab61dbf011713b35adc7a76">data_out</a></span> <span class="vhdlchar">&lt;=</span> <span class="vhdlchar">(</span><span class="keywordflow">others</span><span class="vhdlchar">=</span><span class="vhdlchar">&gt;</span><span class="vhdlchar">&#39;</span><span class="vhdllogic"></span><span class="vhdllogic">0</span><span class="vhdlchar">&#39;</span><span class="vhdlchar">)</span>;</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="keywordflow">elsif</span> <span class="vhdlchar"><a class="code" href="classregister__m.html#a94e616072f03929fe6587e190d23f869">enable</a></span> <span class="vhdlchar">=</span> <span class="vhdlchar">&#39;</span><span class="vhdllogic"></span><span class="vhdllogic">1</span><span class="vhdlchar">&#39;</span> <span class="keywordflow">then</span></div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                   <span class="vhdlchar"><a class="code" href="classregister__m.html#a4868b3bbbab61dbf011713b35adc7a76">data_out</a></span> <span class="vhdlchar">&lt;=</span> <span class="vhdlchar"><a class="code" href="classregister__m.html#a965125180a631cab2d68214e09827909">data_in</a></span>;</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordflow">end</span> <span class="keywordflow">if</span>;</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">end</span> <span class="keywordflow">if</span>;</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">end</span> <span class="keywordflow">process</span>;</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordflow">end</span> <span class="vhdlchar">Behavioral</span>;</div><div class="ttc" id="classregister__m_html_a94e37f4a694983c46ed8002169815d5c"><div class="ttname"><a href="classregister__m.html#a94e37f4a694983c46ed8002169815d5c">register_m.clock</a></div><div class="ttdeci">in clockSTD_LOGIC  </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00045">register_m.vhd:45</a></div></div>
+<div class="ttc" id="classregister__m_html_a4868b3bbbab61dbf011713b35adc7a76"><div class="ttname"><a href="classregister__m.html#a4868b3bbbab61dbf011713b35adc7a76">register_m.data_out</a></div><div class="ttdeci">out data_outSTD_LOGIC_VECTOR(   N- 1 downto  0)  </div><div class="ttdoc">Segnale di temporizzazione del registro. </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00044">register_m.vhd:44</a></div></div>
+<div class="ttc" id="classregister__m_html"><div class="ttname"><a href="classregister__m.html">register_m</a></div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00039">register_m.vhd:39</a></div></div>
+<div class="ttc" id="classregister__m_html_a26e641c17a5a85571504f47a7c3490d0"><div class="ttname"><a href="classregister__m.html#a26e641c17a5a85571504f47a7c3490d0">register_m.N</a></div><div class="ttdeci">Nnatural  := 32</div><div class="ttdoc">Definisce la dimensione N del registro che viene istanziato. </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00040">register_m.vhd:40</a></div></div>
+<div class="ttc" id="classmod__quad__oper_html_ae4f03c286607f3181e16b9aa12d0c6d4"><div class="ttname"><a href="classmod__quad__oper.html#ae4f03c286607f3181e16b9aa12d0c6d4">mod_quad_oper.IEEE</a></div><div class="ttdeci">_library_ IEEEIEEE</div><div class="ttdoc">Salvataggio del risultato sui segnali di uscita. </div><div class="ttdef"><b>Definition:</b> <a href="mod__quad__oper_8vhd_source.html#l00043">mod_quad_oper.vhd:43</a></div></div>
+<div class="ttc" id="classregister__m_html_a965125180a631cab2d68214e09827909"><div class="ttname"><a href="classregister__m.html#a965125180a631cab2d68214e09827909">register_m.data_in</a></div><div class="ttdeci">in data_inSTD_LOGIC_VECTOR(   N- 1 downto  0)  </div><div class="ttdoc">Valore di ingresso al registro espresso su N bit. </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00041">register_m.vhd:41</a></div></div>
+<div class="ttc" id="classregister__m_html_a94e616072f03929fe6587e190d23f869"><div class="ttname"><a href="classregister__m.html#a94e616072f03929fe6587e190d23f869">register_m.enable</a></div><div class="ttdeci">in enableSTD_LOGIC  </div><div class="ttdoc">Segnale di abilitazione utilizzato per la scrittura nel registro. </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00042">register_m.vhd:42</a></div></div>
+<div class="ttc" id="classregister__m_html_a8881084de0fcf748e41bd0fd1028445e"><div class="ttname"><a href="classregister__m.html#a8881084de0fcf748e41bd0fd1028445e">register_m.reset_n</a></div><div class="ttdeci">in reset_nSTD_LOGIC  </div><div class="ttdoc">Reset del registro, definito attivo basso e sincrono col segnale di temporizzazione. </div><div class="ttdef"><b>Definition:</b> <a href="register__m_8vhd_source.html#l00043">register_m.vhd:43</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generato da &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

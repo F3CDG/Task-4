@@ -1,0 +1,38 @@
+/*! \mainpage Task 4 Documentation
+ *
+ * \section intro_sec Introduzione
+ *
+ * Il task 4 rappresenta il progetto finale da realizzare per l'esame di Sistemi Embedded del corso di Laurea Magistrale in Ingegneria Informatica, a.a 2016/2017. Esso è inserito all'interno di un progetto più ampio, sviluppato in collaborazione con l'azienda Aster, che prevede l'implementazione su FPGA di un ricevitore di un Radar Bistabile Passivo. A differenza dei radar attualmente utilizzati, detti attivi, questo tipo di radar non fa uso dell'apparato trasmissivo. Per adempiere alle proprie funzioni, questo dispositivo, non trasmettendo segnali, fa uso di segnali già presenti nell'etere, in particolare, sono stati scelti in fase progettuale i segnali utilizzati dal sistema Global Navigation Satellite System Galileo. Il sistema si compone di 3 moduli principali:
+
+1) Fase di Aquisizione; 
+
+2) Fase di Tracking;
+
+3) Fase di Compressione.
+
+Il Task in esame, incapsulato nella fase di Tracking, utilizzando i segnali EaryGate e LateGate, rappresentazioni del segnale primario anticipato e ritardato, fornisce una stima del valore r. Quest'ultimo, confrontato con una opportuna soglia, è in grado di stabilire se l'oggetto si sta allontanando o avvicinando dalla fonte trasmissiva del segnale. Viene, per questo motivo, utilizzato per correggere i valori di Delay, Frequenza Doppler e Fase.
+ * 
+ * \section Traccia_sec Traccia
+ * Si realizzi un IP core che implementi il raffinamento del calcolo del delay che avviene durante la fase di Tracking, relativamente alla seconda parte durante la quale bisogna effettuare i moduli delle sommatorie, ottenute durante lo step precedente, calcolarne il rapporto e ricavarne la radice quadrata. 
+
+Per la realizzazione del task si richiede l'implementazione di:
+
+1. moltiplicatore;
+
+2. sommatore;
+
+3. divisore;
+
+4. radice quadrata.
+ *
+ * \section sul_sec Soluzioni
+ * In questa documentazione vengono proposte 3 soluzioni differenti al problema.
+ * \subsection v_1_0_sec Task 4 v1.0
+ * La versione 1.0 rappresenta una prima bozza di soluzione. Nell'implementazione di essa sono stati utilizzati interamente moduli forniti dalla Xilinx. Il segnale di uscita è un numero unsigned su 24 bit, di cui 4 sono la parte intera e 20 la parte decimale.
+ *
+ * \subsection v_2_0 Task 4 v2.0
+ * Questa versione si differenzia rispetto alla precedente in quanto il valore di uscita, sempre rappresentato su 24 bit, è interpretato come numero signed con 13 bit parte intera e 11 parte decimale. Inoltre, dopo un'attenta analisi di area e frequenze di lavoro, sono stati sostituiti i componenti che realizzano il modulo quadro dei segnali complessi in input e il componente che realizza la radice quadrata. L'allineamento dei bit in uscita è effettuato semplicemente troncando la parte decimale meno significativa, in uscita dalla radice, e aggiungendo degli zeri in testa al numero.
+*
+* \subsection v_2_1 Task 4 v2.1
+* Rispetto alla precedente soluzione, la v2.1 ottimizza ulteriormente l'area occupata dal dispositivo andando a modificare il segnale in uscita al divisore. Dovendo, comunque troncare il risultato in uscita, si è scelto, infatti, di rappresentare il quoziente con solo 22 cifre decimali e non più 40. L'uscita finale è rappresentata sempre su 24 bit signed, di cui 13 parte intera e 11 decimale.
+ */

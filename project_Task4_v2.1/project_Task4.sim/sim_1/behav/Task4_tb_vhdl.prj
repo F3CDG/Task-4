@@ -1,0 +1,15 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/sim/AXI4_Stream_Divider_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/demo_tb/tb_AXI4_Stream_Divider_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/imports/new/register_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sources_1/new/Task4_m.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sim_1/new/Task4_tb.vhd"
+vhdl xil_defaultlib  "../../../project_Task4.srcs/sim_1/new/Task4_automatic_tb.vhd"
+
+# Do not sort compile order
+nosort

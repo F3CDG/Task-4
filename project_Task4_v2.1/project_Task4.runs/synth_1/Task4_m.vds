@@ -1,0 +1,602 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Jul 18 10:48:12 2017
+# Process ID: 9225
+# Current directory: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1
+# Command line: vivado -log Task4_m.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Task4_m.tcl
+# Log file: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/Task4_m.vds
+# Journal file: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source Task4_m.tcl -notrace
+Command: synth_design -top Task4_m -part xc7z010clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 9229 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1065.566 ; gain = 135.086 ; free physical = 11302 ; free virtual = 13415
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Task4_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:59]
+INFO: [Synth 8-3491] module 'AXI4_Stream_Absolute_Square_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:40' bound to instance 'ABS_SQR_EARLY' of component 'AXI4_Stream_Absolute_Square_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:129]
+INFO: [Synth 8-638] synthesizing module 'AXI4_Stream_Absolute_Square_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:53]
+INFO: [Synth 8-3491] module 'abs_sqr_control_unit_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd:39' bound to instance 'CONTROL_UNIT_INST' of component 'abs_sqr_control_unit_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:94]
+INFO: [Synth 8-638] synthesizing module 'abs_sqr_control_unit_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd:52]
+INFO: [Synth 8-256] done synthesizing module 'abs_sqr_control_unit_m' (1#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd:52]
+INFO: [Synth 8-3491] module 'abs_sqr_operative_part_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:41' bound to instance 'OPERATIVE_UNIT_INST' of component 'abs_sqr_operative_part_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:106]
+INFO: [Synth 8-638] synthesizing module 'abs_sqr_operative_part_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:52]
+	Parameter N bound to: 64 - type: integer 
+INFO: [Synth 8-3491] module 'register_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd:39' bound to instance 'BUFFER_IN_INST' of component 'register_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:87]
+INFO: [Synth 8-638] synthesizing module 'register_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd:48]
+	Parameter N bound to: 64 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'register_m' (2#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd:48]
+	Parameter n bound to: 32 - type: integer 
+INFO: [Synth 8-3491] module 'mod_quad_oper' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:47' bound to instance 'SQUARE_INST' of component 'mod_quad_oper' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:96]
+INFO: [Synth 8-638] synthesizing module 'mod_quad_oper' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:54]
+	Parameter n bound to: 32 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mod_quad_oper' (3#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:54]
+	Parameter N bound to: 64 - type: integer 
+INFO: [Synth 8-3491] module 'register_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd:39' bound to instance 'BUFFER_OUT_INST' of component 'register_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:102]
+INFO: [Synth 8-256] done synthesizing module 'abs_sqr_operative_part_m' (4#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd:52]
+INFO: [Synth 8-256] done synthesizing module 'AXI4_Stream_Absolute_Square_m' (5#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:53]
+INFO: [Synth 8-3491] module 'AXI4_Stream_Absolute_Square_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd:40' bound to instance 'ABS_SQR_LATE' of component 'AXI4_Stream_Absolute_Square_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:140]
+INFO: [Synth 8-3491] module 'AXI4_Stream_Divider_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/.Xil/Vivado-9225-daniele-Inspiron-7559/realtime/AXI4_Stream_Divider_m_stub.vhdl:5' bound to instance 'DIVIDER' of component 'AXI4_Stream_Divider_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:151]
+INFO: [Synth 8-638] synthesizing module 'AXI4_Stream_Divider_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/.Xil/Vivado-9225-daniele-Inspiron-7559/realtime/AXI4_Stream_Divider_m_stub.vhdl:22]
+INFO: [Synth 8-3491] module 'AXI4_Stream_Square_Root_m' declared at '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd:39' bound to instance 'SQUARE_ROOT' of component 'AXI4_Stream_Square_Root_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:166]
+INFO: [Synth 8-638] synthesizing module 'AXI4_Stream_Square_Root_m' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd:52]
+INFO: [Synth 8-256] done synthesizing module 'AXI4_Stream_Square_Root_m' (6#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd:52]
+INFO: [Synth 8-256] done synthesizing module 'Task4_m' (7#1) [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:59]
+WARNING: [Synth 8-3917] design Task4_m has port m_axis_r_tdata[23] driven by constant 0
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1106.035 ; gain = 175.555 ; free physical = 11260 ; free virtual = 13373
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1106.035 ; gain = 175.555 ; free physical = 11260 ; free virtual = 13373
+---------------------------------------------------------------------------------
+WARNING: [Project 1-486] Could not resolve non-primitive black box cell 'AXI4_Stream_Divider_m' instantiated as 'DIVIDER' [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/new/Task4_m.vhd:151]
+INFO: [Device 21-403] Loading part xc7z010clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/.Xil/Vivado-9225-daniele-Inspiron-7559/dcp/AXI4_Stream_Divider_m_in_context.xdc] for cell 'DIVIDER'
+Finished Parsing XDC File [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/.Xil/Vivado-9225-daniele-Inspiron-7559/dcp/AXI4_Stream_Divider_m_in_context.xdc] for cell 'DIVIDER'
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1462.238 ; gain = 0.000 ; free physical = 11086 ; free virtual = 13200
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 11085 ; free virtual = 13199
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z010clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 11085 ; free virtual = 13199
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 11085 ; free virtual = 13199
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 11080 ; free virtual = 13193
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     64 Bit       Adders := 2     
+	   2 Input     48 Bit       Adders := 2     
+	   3 Input     48 Bit       Adders := 1     
++---Registers : 
+	               64 Bit    Registers := 4     
+	               48 Bit    Registers := 3     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 2     
++---Multipliers : 
+	                32x32  Multipliers := 4     
++---Muxes : 
+	   2 Input     48 Bit        Muxes := 1     
+	   4 Input     48 Bit        Muxes := 3     
+	   2 Input      2 Bit        Muxes := 5     
+	   5 Input      2 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 5     
+	   4 Input      1 Bit        Muxes := 17    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module abs_sqr_control_unit_m 
+Detailed RTL Component Info : 
++---Registers : 
+	                2 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      2 Bit        Muxes := 1     
+	   5 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+	   4 Input      1 Bit        Muxes := 5     
+Module register_m 
+Detailed RTL Component Info : 
++---Registers : 
+	               64 Bit    Registers := 1     
+Module mod_quad_oper 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     64 Bit       Adders := 1     
++---Multipliers : 
+	                32x32  Multipliers := 2     
+Module AXI4_Stream_Square_Root_m 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     48 Bit       Adders := 2     
+	   3 Input     48 Bit       Adders := 1     
++---Registers : 
+	               48 Bit    Registers := 3     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input     48 Bit        Muxes := 1     
+	   4 Input     48 Bit        Muxes := 3     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 3     
+	   4 Input      1 Bit        Muxes := 7     
+	   2 Input      1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:78]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:76]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:78]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd:76]
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: A2*B.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: (PCIN>>17)+A2*B.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_EARLY/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: A2*B.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2, operation Mode is: (PCIN>>17)+A2*B.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_re2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: Generating DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register B is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: register A is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+DSP Report: operator ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2 is absorbed into DSP ABS_SQR_LATE/OPERATIVE_UNIT_INST/SQUARE_INST/data_im2.
+WARNING: [Synth 8-3917] design Task4_m has port m_axis_r_tdata[23] driven by constant 0
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[45] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[45]' (FDE) to 'SQUARE_ROOT/one_reg[43]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[43] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[43]' (FDE) to 'SQUARE_ROOT/one_reg[41]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[41] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[41]' (FDE) to 'SQUARE_ROOT/one_reg[39]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[39] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[39]' (FDE) to 'SQUARE_ROOT/one_reg[37]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[37] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[37]' (FDE) to 'SQUARE_ROOT/one_reg[35]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[35] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[35]' (FDE) to 'SQUARE_ROOT/one_reg[33]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[33] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[33]' (FDE) to 'SQUARE_ROOT/one_reg[31]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[31] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[31]' (FDE) to 'SQUARE_ROOT/one_reg[29]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[29] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[29]' (FDE) to 'SQUARE_ROOT/one_reg[27]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[27] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[27]' (FDE) to 'SQUARE_ROOT/one_reg[25]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[25] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[25]' (FDE) to 'SQUARE_ROOT/one_reg[23]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[23] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[23]' (FDE) to 'SQUARE_ROOT/one_reg[21]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[21] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[21]' (FDE) to 'SQUARE_ROOT/one_reg[19]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[19] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[19]' (FDE) to 'SQUARE_ROOT/one_reg[17]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[17] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[17]' (FDE) to 'SQUARE_ROOT/one_reg[15]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[15] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[15]' (FDE) to 'SQUARE_ROOT/one_reg[13]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[13] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[13]' (FDE) to 'SQUARE_ROOT/one_reg[11]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[11] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[11]' (FDE) to 'SQUARE_ROOT/one_reg[9]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[9] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[9]' (FDE) to 'SQUARE_ROOT/one_reg[7]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[7] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[7]' (FDE) to 'SQUARE_ROOT/one_reg[5]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[5] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[5]' (FDE) to 'SQUARE_ROOT/one_reg[3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[3] )
+INFO: [Synth 8-3886] merging instance 'SQUARE_ROOT/one_reg[3]' (FDE) to 'SQUARE_ROOT/one_reg[1]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\SQUARE_ROOT/one_reg[1] )
+WARNING: [Synth 8-3332] Sequential element (SQUARE_ROOT/one_reg[1]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[63]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[62]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[61]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[60]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[59]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[58]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[57]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[56]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[55]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[54]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[53]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[52]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[51]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[50]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[49]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[48]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[47]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[46]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[45]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[44]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[43]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[42]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[41]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[40]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[39]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[38]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[37]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[36]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[35]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[34]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[33]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[32]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[16]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[15]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[14]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[13]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[12]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[11]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[10]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[9]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[8]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[7]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[6]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[5]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[4]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[3]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[2]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[1]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_EARLY/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[0]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[63]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[62]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[61]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[60]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[59]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[58]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[57]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[56]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[55]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[54]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[53]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[52]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[51]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[50]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[49]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[48]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[47]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[46]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[45]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[44]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[43]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[42]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[41]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[40]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[39]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[38]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[37]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[36]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[35]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[34]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[33]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[32]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[16]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[15]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[14]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[13]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[12]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[11]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[10]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[9]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[8]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[7]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[6]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[5]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[4]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[3]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[2]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[1]) is unused and will be removed from module Task4_m.
+WARNING: [Synth 8-3332] Sequential element (ABS_SQR_LATE/OPERATIVE_UNIT_INST/BUFFER_IN_INST/data_out_reg[0]) is unused and will be removed from module Task4_m.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 11056 ; free virtual = 13170
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping  Report (see note below)
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping      | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Task4_m     | A2*B             | 18     | 15     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A*B   | 15     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B  | 18     | 15     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B2 | 15     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B2 | 18     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B             | 18     | 15     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A*B   | 15     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B  | 18     | 15     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B2 | 15     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Task4_m     | (PCIN>>17)+A2*B2 | 18     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 10986 ; free virtual = 13101
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1462.238 ; gain = 531.758 ; free physical = 10985 ; free virtual = 13100
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10963 ; free virtual = 13078
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10963 ; free virtual = 13077
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10963 ; free virtual = 13077
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10963 ; free virtual = 13077
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10963 ; free virtual = 13077
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10965 ; free virtual = 13079
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10965 ; free virtual = 13079
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+----------------------+----------+
+|      |BlackBox name         |Instances |
++------+----------------------+----------+
+|1     |AXI4_Stream_Divider_m |         1|
++------+----------------------+----------+
+
+Report Cell Usage: 
++------+---------------------------+------+
+|      |Cell                       |Count |
++------+---------------------------+------+
+|1     |AXI4_Stream_Divider_m_bbox |     1|
+|2     |BUFG                       |     1|
+|3     |CARRY4                     |   128|
+|4     |DSP48E1_2                  |    16|
+|5     |LUT1                       |    52|
+|6     |LUT2                       |   397|
+|7     |LUT3                       |   127|
+|8     |LUT4                       |    56|
+|9     |LUT5                       |     1|
+|10    |LUT6                       |     8|
+|11    |FDRE                       |   256|
+|12    |IBUF                       |   133|
+|13    |OBUF                       |    27|
++------+---------------------------+------+
+
+Report Instance Areas: 
++------+------------------------+--------------------------------+------+
+|      |Instance                |Module                          |Cells |
++------+------------------------+--------------------------------+------+
+|1     |top                     |                                |  1293|
+|2     |  ABS_SQR_EARLY         |AXI4_Stream_Absolute_Square_m   |   281|
+|3     |    CONTROL_UNIT_INST   |abs_sqr_control_unit_m_1        |     9|
+|4     |    OPERATIVE_UNIT_INST |abs_sqr_operative_part_m_2      |   272|
+|5     |      BUFFER_OUT_INST   |register_m_3                    |    64|
+|6     |      SQUARE_INST       |mod_quad_oper_4                 |   208|
+|7     |  ABS_SQR_LATE          |AXI4_Stream_Absolute_Square_m_0 |   282|
+|8     |    CONTROL_UNIT_INST   |abs_sqr_control_unit_m          |    10|
+|9     |    OPERATIVE_UNIT_INST |abs_sqr_operative_part_m        |   272|
+|10    |      BUFFER_OUT_INST   |register_m                      |    64|
+|11    |      SQUARE_INST       |mod_quad_oper                   |   208|
+|12    |  SQUARE_ROOT           |AXI4_Stream_Square_Root_m       |   478|
++------+------------------------+--------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.254 ; gain = 544.773 ; free physical = 10965 ; free virtual = 13079
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 100 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 1475.254 ; gain = 108.480 ; free physical = 10965 ; free virtual = 13079
+Synthesis Optimization Complete : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1475.262 ; gain = 544.781 ; free physical = 10965 ; free virtual = 13079
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 277 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+91 Infos, 102 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1507.270 ; gain = 509.285 ; free physical = 10966 ; free virtual = 13081
+INFO: [Common 17-1381] The checkpoint '/home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/Task4_m.dcp' has been generated.
+report_utilization: Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.09 . Memory (MB): peak = 1531.281 ; gain = 0.000 ; free physical = 10965 ; free virtual = 13080
+INFO: [Common 17-206] Exiting Vivado at Tue Jul 18 10:48:51 2017...

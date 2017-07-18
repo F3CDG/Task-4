@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2016.3 (64-bit)
+# SW Build 1682563 on Mon Oct 10 19:07:27 MDT 2016
+# IP Build 1681267 on Mon Oct 10 21:28:31 MDT 2016
+# Start of session at: Sun Jul 16 11:39:41 2017
+# Process ID: 7904
+# Current directory: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9500 C:\Users\giann\Desktop\PROGETTO FINALE\versione 2 - sqrt daniele\project_Task4\project_Task4.xpr
+# Log file: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4/vivado.log
+# Journal file: C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/giann/Desktop/PROGETTO FINALE/versione 2 - sqrt daniele/project_Task4/project_Task4.xpr}
+launch_simulation
+source task4_tb.tcl
+run all
+close_sim

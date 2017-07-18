@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Jul 18 10:48:12 2017
+# Process ID: 9225
+# Current directory: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1
+# Command line: vivado -log Task4_m.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Task4_m.tcl
+# Log file: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/Task4_m.vds
+# Journal file: /home/daniele/Scrivania/Task4/project_Task4_v2.1.1/project_Task4.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source Task4_m.tcl -notrace

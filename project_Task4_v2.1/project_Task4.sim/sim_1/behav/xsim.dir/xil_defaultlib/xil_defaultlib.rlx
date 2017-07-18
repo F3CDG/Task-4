@@ -1,0 +1,15 @@
+0.6
+2016.4
+Jan 23 2017
+19:19:20
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sim_1/new/Task4_automatic_tb.vhd,1500375015,vhdl,,,,task4_automatic_tb,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sim_1/new/Task4_tb.vhd,1500329478,vhdl,,,,task4_tb,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/imports/new/mod_quad_oper.vhd,1500332416,vhdl,,,,mod_quad_oper,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/imports/new/register_m.vhd,1500370948,vhdl,,,,register_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/demo_tb/tb_AXI4_Stream_Divider_m.vhd,1500369814,vhdl,,,,tb_axi4_stream_divider_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/sim/AXI4_Stream_Divider_m.vhd,1500369814,vhdl,/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/ip/AXI4_Stream_Divider_m/demo_tb/tb_AXI4_Stream_Divider_m.vhd,,,axi4_stream_divider_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Absolute_Square_m.vhd,1500370936,vhdl,,,,axi4_stream_absolute_square_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/AXI4_Stream_Square_Root_m.vhd,1500374725,vhdl,,,,axi4_stream_square_root_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/Task4_m.vhd,1500374886,vhdl,,,,task4_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/abs_sqr_control_unit_m.vhd,1500370942,vhdl,,,,abs_sqr_control_unit_m,,,,,,,,
+/home/daniele/Scrivania/Task4/project_Task4_v2.1/project_Task4.srcs/sources_1/new/abs_sqr_operative_part_m.vhd,1500370944,vhdl,,,,abs_sqr_operative_part_m,,,,,,,,

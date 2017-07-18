@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Task 4: Task 4 Documentation</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="LogoGruppoIV.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Task 4
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generato da Doxygen 1.8.14 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Cerca');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Cerca');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Task 4 Documentation </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
+Introduzione</h1>
+<p>Il task 4 rappresenta il progetto finale da realizzare per l'esame di Sistemi Embedded del corso di Laurea Magistrale in Ingegneria Informatica, a.a 2016/2017. Esso è inserito all'interno di un progetto più ampio, sviluppato in collaborazione con l'azienda Aster, che prevede l'implementazione su FPGA di un ricevitore di un Radar Bistabile Passivo. A differenza dei radar attualmente utilizzati, detti attivi, questo tipo di radar non fa uso dell'apparato trasmissivo. Per adempiere alle proprie funzioni, questo dispositivo, non trasmettendo segnali, fa uso di segnali già presenti nell'etere, in particolare, sono stati scelti in fase progettuale i segnali utilizzati dal sistema Global Navigation Satellite System Galileo. Il sistema si compone di 3 moduli principali:</p>
+<p>1) Fase di Aquisizione;</p>
+<p>2) Fase di Tracking;</p>
+<p>3) Fase di Compressione.</p>
+<p>Il Task in esame, incapsulato nella fase di Tracking, utilizzando i segnali EaryGate e LateGate, rappresentazioni del segnale primario anticipato e ritardato, fornisce una stima del valore r. Quest'ultimo, confrontato con una opportuna soglia, è in grado di stabilire se l'oggetto si sta allontanando o avvicinando dalla fonte trasmissiva del segnale. Viene, per questo motivo, utilizzato per correggere i valori di Delay, Frequenza Doppler e Fase.</p>
+<h1><a class="anchor" id="Traccia_sec"></a>
+Traccia</h1>
+<p>Si realizzi un IP core che implementi il raffinamento del calcolo del delay che avviene durante la fase di Tracking, relativamente alla seconda parte durante la quale bisogna effettuare i moduli delle sommatorie, ottenute durante lo step precedente, calcolarne il rapporto e ricavarne la radice quadrata.</p>
+<p>Per la realizzazione del task si richiede l'implementazione di:</p>
+<ol type="1">
+<li>moltiplicatore;</li>
+<li>sommatore;</li>
+<li>divisore;</li>
+<li>radice quadrata.</li>
+</ol>
+<h1><a class="anchor" id="sul_sec"></a>
+Soluzioni</h1>
+<p>In questa documentazione vengono proposte 3 soluzioni differenti al problema. </p>
+<h2><a class="anchor" id="v_1_0_sec"></a>
+Task 4 v1.0</h2>
+<p>La versione 1.0 rappresenta una prima bozza di soluzione. Nell'implementazione di essa sono stati utilizzati interamente moduli forniti dalla Xilinx. Il segnale di uscita è un numero unsigned su 24 bit, di cui 4 sono la parte intera e 20 la parte decimale.</p>
+<h2><a class="anchor" id="v_2_0"></a>
+Task 4 v2.0</h2>
+<p>Questa versione si differenzia rispetto alla precedente in quanto il valore di uscita, sempre rappresentato su 24 bit, è interpretato come numero signed con 13 bit parte intera e 11 parte decimale. Inoltre, dopo un'attenta analisi di area e frequenze di lavoro, sono stati sostituiti i componenti che realizzano il modulo quadro dei segnali complessi in input e il componente che realizza la radice quadrata. L'allineamento dei bit in uscita è effettuato semplicemente troncando la parte decimale meno significativa, in uscita dalla radice, e aggiungendo degli zeri in testa al numero.</p>
+<h2><a class="anchor" id="v_2_1"></a>
+Task 4 v2.1</h2>
+<p>Rispetto alla precedente soluzione, la v2.1 ottimizza ulteriormente l'area occupata dal dispositivo andando a modificare il segnale in uscita al divisore. Dovendo, comunque troncare il risultato in uscita, si è scelto, infatti, di rappresentare il quoziente con solo 22 cifre decimali e non più 40. L'uscita finale è rappresentata sempre su 24 bit signed, di cui 13 parte intera e 11 decimale. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generato da &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>
